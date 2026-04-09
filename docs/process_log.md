@@ -5,6 +5,29 @@ version: 1.0
 
 # Process Log
 
+## 2026-04-09 — Content Engine
+
+**Prompt:** Build the Content Engine for Yowie. It reads the Brand Configuration Layer and takes a structured campaign brief as input. The brief includes: product line, audience segment, channel, content type, campaign stage, primary message, and optional fields. The engine produces on-brand, segment-specific, channel-ready content. Demonstrate four output modes: single item, segment variants, channel variants, and a full campaign package. Output as an interactive HTML tool.
+
+**What was built:** An interactive single-file HTML tool (`tools/content_engine.html`) that demonstrates Yowie's content generation pipeline. Contains 4 pre-generated campaign briefs covering all product lines, with AI-written copy for every audience × channel combination. Four output modes show increasing complexity: single item, segment variants (same message adapted for different audiences), channel variants (same audience across email/social/product page), and full campaign package with metadata.
+
+**Key decisions:**
+- Hybrid approach: pre-generated AI copy at build time (not live generation), embedded as JSON in the HTML file
+- 4 briefs chosen to map to launch phases: product launch, cross-segment, acquisition, seasonal
+- Each content card includes rules applied, pillar used, and rationale — the tool teaches the system logic
+- "What changed" annotations between variants explain adaptation decisions
+- Matched existing brand_config_viewer.html dark theme for visual consistency
+- Sidebar + content panel layout matching the established interaction pattern
+
+**Files created or modified:**
+- `tools/content_engine.html` (created)
+- `docs/superpowers/specs/2026-04-09-content-engine-design.md` (created)
+- `docs/superpowers/plans/2026-04-09-content-engine.md` (created)
+- `docs/process_log.md` (modified)
+- `tutorials/03_content_engine.md` (created)
+
+---
+
 ## 2026-04-09 — Brand Configuration Layer
 
 **Prompt:** Build the Brand Configuration Layer for Yowie. This is not a document — it's the rules engine that governs every piece of content the ecosystem produces. Read the brand definition and create a structured configuration that encodes: voice attributes and channel-specific registers, audience-specific voice adaptations (backcountry vs. casual), messaging hierarchy by product line and audience segment, approved and forbidden terminology, style standards, and compliance rules. Output as an interactive HTML tool where I can browse the configuration, see how rules apply to different product/audience/channel combinations, and preview how the voice shifts by context.
