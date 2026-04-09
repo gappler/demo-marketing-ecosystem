@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yowie Marketing Ecosystem — Guided Tour</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f5f5f5;
+  color: #222;
+}
+
+/* Header */
+.hero {
+  background: #1a1a1a;
+  color: #fff;
+  padding: 60px 40px;
+  text-align: center;
+}
+.hero-brand { font-size: 0.9rem; text-transform: uppercase; letter-spacing: .12em; color: #777; margin-bottom: 12px; }
+.hero-title { font-size: 2.4rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: 16px; }
+.hero-subtitle { font-size: 1.1rem; color: #aaa; max-width: 680px; margin: 0 auto 28px; line-height: 1.6; }
+.hero-stats { display: flex; justify-content: center; gap: 40px; margin-top: 28px; }
+.hero-stat-value { font-size: 2rem; font-weight: 700; }
+.hero-stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: .06em; color: #777; margin-top: 4px; }
+.hero-stat-value.teal { color: #28a745; }
+.hero-stat-value.gold { color: #e2c87d; }
+.hero-stat-value.blue { color: #007bff; }
+
+/* Nav */
+.tool-nav {
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0 40px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+}
+.tool-nav a {
+  padding: 14px 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #555;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s;
+}
+.tool-nav a:hover { color: #1a1a1a; border-bottom-color: #ccc; }
+
+/* Intro */
+.intro {
+  max-width: 800px;
+  margin: 48px auto;
+  padding: 0 40px;
+  line-height: 1.8;
+  font-size: 0.95rem;
+  color: #444;
+}
+.intro h2 { font-size: 1.5rem; font-weight: 700; color: #1a1a1a; margin-bottom: 16px; }
+.intro p { margin-bottom: 16px; }
+.intro strong { color: #222; }
+
+/* Tool sections */
+.tool-section {
+  max-width: 1200px;
+  margin: 0 auto 60px;
+  padding: 0 40px;
+}
+.tool-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.tool-number {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  background: #1a1a1a;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.tool-name { font-size: 1.4rem; font-weight: 700; color: #1a1a1a; }
+.tool-problem {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 16px;
+  line-height: 1.6;
+  max-width: 800px;
+}
+.tool-prompt {
+  background: #1a1a1a;
+  color: #ccc;
+  padding: 16px 20px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  position: relative;
+}
+.tool-prompt::before {
+  content: 'PROMPT';
+  position: absolute;
+  top: -10px;
+  left: 16px;
+  background: #1a1a1a;
+  padding: 0 8px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: #555;
+}
+.tool-prompt em { color: #fff; font-style: normal; }
+.tool-preview {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.tool-preview iframe {
+  width: 100%;
+  height: 600px;
+  border: none;
+  display: block;
+}
+.tool-preview-bar {
+  background: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tool-preview-dots { display: flex; gap: 6px; }
+.tool-preview-dots span { width: 10px; height: 10px; border-radius: 50%; }
+.dot-red { background: #ff5f57; }
+.dot-yellow { background: #ffbd2e; }
+.dot-green { background: #28c840; }
+.tool-preview-file { font-size: 0.75rem; color: #888; }
+.tool-preview-open {
+  font-size: 0.75rem;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 600;
+}
+.tool-preview-open:hover { text-decoration: underline; }
+
+/* Divider */
+.divider {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.divider hr {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin-bottom: 48px;
+}
+
+/* How it was built */
+.how-built {
+  max-width: 800px;
+  margin: 64px auto 0;
+  padding: 0 40px;
+  line-height: 1.8;
+  font-size: 0.95rem;
+  color: #444;
+}
+.how-built h2 { font-size: 1.5rem; font-weight: 700; color: #1a1a1a; margin-bottom: 16px; }
+.how-built h3 { font-size: 1.15rem; font-weight: 700; color: #1a1a1a; margin: 32px 0 12px; }
+.how-built p { margin-bottom: 16px; }
+.how-built strong { color: #222; }
+
+/* CTA */
+.cta {
+  max-width: 800px;
+  margin: 48px auto 64px;
+  padding: 40px;
+  background: #1a1a1a;
+  border-radius: 8px;
+  text-align: center;
+}
+.cta h2 { font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 12px; }
+.cta p { font-size: 0.95rem; color: #999; margin-bottom: 24px; line-height: 1.6; }
+.cta a.cta-link {
+  display: inline-block;
+  padding: 12px 32px;
+  background: #fff;
+  color: #1a1a1a;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background .15s, color .15s;
+}
+.cta a.cta-link:hover { background: #e0e0e0; }
+
+/* Footer */
+.footer {
+  background: #1a1a1a;
+  color: #777;
+  padding: 32px 40px;
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+.footer strong { color: #aaa; }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-brand">Yowie</div>
+  <div class="hero-title">Marketing Ecosystem</div>
+  <div class="hero-subtitle">An interconnected content pipeline built entirely with Claude Code. From brand configuration through competitive research, content generation, human review, and delivery &mdash; every stage connected, every output on-brand.</div>
+  <div class="hero-stats">
+    <div><div class="hero-stat-value">4</div><div class="hero-stat-label">Tools Built</div></div>
+    <div><div class="hero-stat-value teal">8</div><div class="hero-stat-label">Products</div></div>
+    <div><div class="hero-stat-value gold">7</div><div class="hero-stat-label">Components</div></div>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav class="tool-nav">
+  <a href="#tool-0">Architecture</a>
+  <a href="#tool-1">1. Brand Config Viewer</a>
+  <a href="#tool-2">2. Brief Builder</a>
+  <a href="#tool-3">3. Content Engine</a>
+  <a href="#how-built">How It Was Built</a>
+</nav>
+
+<!-- Intro -->
+<div class="intro">
+  <h2>Building a Marketing Ecosystem with Claude Code</h2>
+  <p><strong>Yowie</strong> is an outdoor gear company with a 6-person team managing four product lines &mdash; backpacks, tents, sleeping bags, and coolers &mdash; across four distinct audience segments. They can't scale by adding headcount. Every marketing effort needs to be high-leverage: consistent voice, targeted messaging, and content that works across channels without a 20-person content team.</p>
+  <p>The solution isn't more people. It's a system. This project demonstrates how Claude Code can build an interconnected ecosystem of marketing tools, all governed by a single brand configuration that ensures every piece of content &mdash; across every product, audience, and channel &mdash; sounds like Yowie.</p>
+  <p>The ecosystem has three layers. A <strong>Brand Configuration Layer</strong> captures Yowie's voice, terminology, messaging pillars, and audience adaptations as structured data. A <strong>Research & Brief Builder</strong> takes raw inputs and competitive intelligence and produces structured campaign briefs. A <strong>Content Engine</strong> reads those briefs and generates on-brand, segment-specific, channel-ready content. Human decision gates sit between every AI stage &mdash; AI produces drafts, humans make decisions.</p>
+</div>
+
+<!-- Tool 0: Architecture Map -->
+<div class="divider"><hr></div>
+<div class="tool-section" id="tool-0">
+  <div class="tool-header">
+    <div class="tool-number" style="background: #e2c87d; color: #1a1a1a;">&bull;</div>
+    <div class="tool-name">Architecture Map</div>
+  </div>
+  <div class="tool-problem">
+    <strong>The full pipeline:</strong> Every tool reads from the Brand Configuration Layer. Every AI output passes through a human decision gate before moving downstream. The pipeline flows from research through content generation to final delivery across email, social, CMS, and design.
+  </div>
+  <div class="tool-preview">
+    <div class="tool-preview-bar">
+      <div class="tool-preview-dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+      <span class="tool-preview-file">tools/architecture_map.html</span>
+      <a href="tools/architecture_map.html" target="_blank" class="tool-preview-open">Open Full Size &rarr;</a>
+    </div>
+    <iframe src="tools/architecture_map.html" loading="lazy"></iframe>
+  </div>
+</div>
+
+<!-- Tool 1: Brand Configuration Viewer -->
+<div class="divider"><hr></div>
+<div class="tool-section" id="tool-1">
+  <div class="tool-header">
+    <div class="tool-number">1</div>
+    <div class="tool-name">Brand Configuration Viewer</div>
+  </div>
+  <div class="tool-problem">
+    <strong>Problem it solves:</strong> Brand voice lives in a PDF that nobody reads. Copy sounds different depending on who wrote it, which channel it's for, and whether the writer remembered to check the style guide. The result is inconsistent messaging across products and audiences &mdash; backcountry hikers get casual copy, car campers get jargon they don't understand.
+  </div>
+  <div class="tool-prompt">
+    Build an interactive brand configuration viewer. Read the brand definition and output a <em>structured JSON configuration</em> that captures voice rules, channel-specific registers, audience adaptations, messaging pillars with audience resonance, approved/forbidden/conditional terminology, and <em>22 hand-crafted copy examples</em> across all product/audience/channel combinations. Build an interactive HTML viewer where I can select any product, audience, and channel and see the applicable rules, pillar rankings, terminology, and example copy.
+  </div>
+  <div class="tool-preview">
+    <div class="tool-preview-bar">
+      <div class="tool-preview-dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+      <span class="tool-preview-file">tools/brand_config_viewer.html</span>
+      <a href="tools/brand_config_viewer.html" target="_blank" class="tool-preview-open">Open Full Size &rarr;</a>
+    </div>
+    <iframe src="tools/brand_config_viewer.html" loading="lazy"></iframe>
+  </div>
+</div>
+
+<!-- Tool 2: Research & Brief Builder -->
+<div class="divider"><hr></div>
+<div class="tool-section" id="tool-2">
+  <div class="tool-header">
+    <div class="tool-number">2</div>
+    <div class="tool-name">Research & Brief Builder</div>
+  </div>
+  <div class="tool-problem">
+    <strong>Problem it solves:</strong> Campaign briefs are written from scratch every time, with competitive research scattered across browser tabs and audience insights trapped in someone's head. The brief that reaches the content creator is usually a Slack message: "write something for the cooler launch, make it sound good." No structured inputs, no reasoning trail, no way to reproduce what worked.
+  </div>
+  <div class="tool-prompt">
+    Build the Research & Brief Builder. It takes <em>raw inputs</em> (product data, audience research, competitive landscape, seasonal context) and produces <em>structured campaign briefs</em> that feed directly into the Content Engine. Demonstrate it by building a brief for the cooler market acquisition campaign: <em>research the competitive cooler landscape</em> (YETI, Stanley, RTIC, Igloo), analyze the casual buyer audience, identify Yowie's positioning angle, and output a complete campaign brief. Include a <em>pipeline diagram showing human decision points</em> in the workflow.
+  </div>
+  <div class="tool-preview">
+    <div class="tool-preview-bar">
+      <div class="tool-preview-dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+      <span class="tool-preview-file">tools/brief_builder.html</span>
+      <a href="tools/brief_builder.html" target="_blank" class="tool-preview-open">Open Full Size &rarr;</a>
+    </div>
+    <iframe src="tools/brief_builder.html" loading="lazy"></iframe>
+  </div>
+</div>
+
+<!-- Tool 3: Content Engine -->
+<div class="divider"><hr></div>
+<div class="tool-section" id="tool-3">
+  <div class="tool-header">
+    <div class="tool-number">3</div>
+    <div class="tool-name">Content Engine</div>
+  </div>
+  <div class="tool-problem">
+    <strong>Problem it solves:</strong> Producing content for 8 products across 4 audience segments and 4 channels means 128 potential content variations. A 6-person team can't write them all, and generic AI copy doesn't know that backcountry hikers want raw specs while car campers want outcomes translated into plain English. The Content Engine reads the brand configuration and an approved campaign brief, then produces content that's on-brand, segment-specific, and channel-ready.
+  </div>
+  <div class="tool-prompt">
+    Build the Content Engine. It reads the Brand Configuration Layer and takes a <em>structured campaign brief</em> as input. The engine produces <em>on-brand, segment-specific, channel-ready content</em>. Demonstrate four output modes: <em>single item</em>, <em>segment variants</em> (same message adapted for backcountry vs. casual buyers), <em>channel variants</em> (email, social, landing page from one brief), and a <em>full campaign package</em>. Show rules applied, pillar used, and rationale for every piece.
+  </div>
+  <div class="tool-preview">
+    <div class="tool-preview-bar">
+      <div class="tool-preview-dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+      <span class="tool-preview-file">tools/content_engine.html</span>
+      <a href="tools/content_engine.html" target="_blank" class="tool-preview-open">Open Full Size &rarr;</a>
+    </div>
+    <iframe src="tools/content_engine.html" loading="lazy"></iframe>
+  </div>
+</div>
+
+<!-- How This Was Built -->
+<div class="divider"><hr></div>
+<div class="how-built" id="how-built">
+  <h2>How This Was Built</h2>
+  <p>The build order was the architecture. Before writing a single tool, we created two foundation files: a <strong>brand definition</strong> that captured Yowie's identity, voice, product catalog, audience profiles, and marketing strategy in 370 lines of structured prose, and a <strong>brand configuration</strong> that translated that definition into machine-readable JSON &mdash; voice rules, channel registers, audience adaptations, messaging pillars, terminology lists, and 22 hand-crafted copy examples.</p>
+  <p>Every tool was then built sequentially, each one reading from the brand configuration and inheriting context from the tools before it. The <strong>Brand Configuration Viewer</strong> established the data model and proved it worked &mdash; select any product, audience, and channel and see the exact rules that govern that combination. The <strong>Brief Builder</strong> consumed the brand config to produce structured campaign briefs with competitive research, audience analysis, and reasoning chains. The <strong>Content Engine</strong> consumed both the brand config and the brief format to generate actual marketing copy across segments and channels.</p>
+  <p>The human decision gates weren't an afterthought. They were designed into the pipeline from the start. Every AI output &mdash; every research brief, every piece of generated copy &mdash; passes through a human review stage before moving downstream. The tools make these gates visible and concrete, with review checklists that define what a reviewer should check. The pipeline diagram in every tool shows exactly where AI stops and human judgment begins.</p>
+
+  <h3>What This Means for Your Team</h3>
+  <p>Every marketing team runs on some combination of SaaS tools that are 70% right. The content calendar almost fits your workflow. The brand guidelines PDF almost gets read. The AI writing tool almost sounds like your brand. You spend the first month configuring, the next six months working around the gaps, and eventually someone starts writing copy from memory because the tools are too slow to consult.</p>
+  <p>The alternative is tools built from your own data. Your voice rules. Your audience segments. Your product catalog. Your terminology &mdash; what to say, what never to say, and the conditional terms that depend on context. Not a platform you rent and reshape. Files you own, that run in a browser, that you can read, modify, and extend in plain language.</p>
+  <p>This ecosystem took one afternoon. Not because the tools are simple &mdash; the Content Engine alone produces 19 distinct pieces of on-brand copy across 4 campaign briefs. It took one afternoon because the foundation was right. Get the brand definition and configuration right, and Claude Code builds everything else from it.</p>
+</div>
+
+<!-- CTA -->
+<div class="cta" style="max-width: 840px;">
+  <h2>Learn how to build for your team.</h2>
+  <p>Agency State helps teams build custom marketing and operational tools with AI &mdash; no developers, no SaaS compromises, no vendor lock-in.</p>
+  <a href="https://agencystate.ai" target="_blank" class="cta-link">Visit Agency State</a>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p><strong>Yowie is a simulated brand</strong> built to demonstrate AI-driven marketing ecosystems.</p>
+  <p>Built with Claude Code. Every tool is a single self-contained HTML file with zero external dependencies.</p>
+  <p>4 tools &middot; 4 tutorials &middot; 1 brand definition &middot; 1 brand config &middot; 0 frameworks</p>
+</div>
+
+</body>
+</html>

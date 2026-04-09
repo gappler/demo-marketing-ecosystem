@@ -5,6 +5,24 @@ version: 1.0
 
 # Process Log
 
+## 2026-04-09 — Architecture Map & Guided Tour
+
+**Prompt:** Build the index.html guided tour page and architecture map for the ecosystem.
+
+**What was built:** Architecture map (`tools/architecture_map.html`) showing the full pipeline from Brand Configuration through Brief Builder, human approval, Content Engine, human approval, to Publish & Distribute. Guided tour page (`index.html`) with dark hero header, sticky navigation, intro section, architecture map embed, and three tool showcases with browser chrome previews, prompts, and problem statements. Includes "How this was built" methodology section and CTA to agencystate.ai.
+
+**Key decisions:**
+- Architecture map shows foundation layer (Brand Config) feeding the 5-stage pipeline
+- AI nodes in teal, human decision gates in gold with review checklists, delivery destinations as output
+- Guided tour follows Sidebar Creative demo pattern: dark hero, light body, browser chrome previews
+- Architecture map shown first (before numbered tools) to establish the full pipeline context
+- Each tool section includes the problem it solves, the prompt that built it, and an iframe preview
+
+**Files created or modified:**
+- `tools/architecture_map.html` (created)
+- `index.html` (created)
+- `docs/process_log.md` (modified)
+
 ## 2026-04-09 — Research & Brief Builder
 
 **Prompt:** Build the Research & Brief Builder for Yowie. This component is the upstream intelligence feed — it takes raw inputs and produces structured campaign briefs that feed directly into the Content Engine. Demonstrate it with competitive research, audience analysis, and reasoning chains. Make it interactive with a pipeline diagram showing human decision points.
