@@ -1115,7 +1115,245 @@
         }
       }
     };
-    // JS added later
+    // --- State management and initialization ---
+    const state = {
+      activeBrief: CONTENT_DATA.briefs[0].id,
+      activeMode: CONTENT_DATA.briefs[0].default_mode
+    };
+
+    function init() {
+      renderBriefList();
+      renderModeSelector();
+      renderContent();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+
+    // --- Helper functions for display names ---
+    function formatChannelName(key) {
+      const names = {
+        product_page: 'Product Page',
+        email: 'Email',
+        social_media: 'Social Media',
+        landing_page: 'Landing Page'
+      };
+      return names[key] || key;
+    }
+
+    function formatAudienceName(key) {
+      const names = {
+        backcountry_hikers: 'Backcountry Hikers',
+        thru_hikers: 'Thru-Hikers',
+        casual_car_camping: 'Casual / Car Camping',
+        cold_weather: 'Cold-Weather Specialists'
+      };
+      return names[key] || key;
+    }
+
+    // --- Sidebar rendering ---
+    function renderBriefList() {
+      const container = document.getElementById('brief-list');
+      container.innerHTML = CONTENT_DATA.briefs.map(brief => `
+        <div class="brief-card ${brief.id === state.activeBrief ? 'active' : ''}"
+             data-brief="${brief.id}" onclick="selectBrief('${brief.id}')">
+          <h3>${brief.name}</h3>
+          <div class="brief-meta">
+            ${brief.product_line} <span class="stage-badge stage-${brief.campaign_stage}">${brief.campaign_stage}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderModeSelector() {
+      document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === state.activeMode);
+      });
+    }
+
+    function selectBrief(briefId) {
+      const brief = CONTENT_DATA.briefs.find(b => b.id === briefId);
+      state.activeBrief = briefId;
+      state.activeMode = brief.default_mode;
+      renderBriefList();
+      renderModeSelector();
+      renderContent();
+    }
+
+    function selectMode(mode) {
+      state.activeMode = mode;
+      renderModeSelector();
+      renderContent();
+    }
+
+    document.getElementById('mode-selector').addEventListener('click', function(e) {
+      if (e.target.classList.contains('mode-btn')) {
+        selectMode(e.target.dataset.mode);
+      }
+    });
+
+    // --- Brief summary rendering ---
+    function renderBriefSummary(brief, alwaysExpanded) {
+      const fields = [
+        ['Product', brief.name + ' (' + brief.product_line + ')'],
+        ['Audiences', brief.audience_segments.map(function(a) { return formatAudienceName(a); }).join(', ')],
+        ['Channels', brief.channels.map(function(c) { return formatChannelName(c); }).join(', ')],
+        ['Stage', brief.campaign_stage],
+        ['Primary Message', brief.primary_message],
+        ['Proof Points', brief.proof_points.join(' · ')],
+        ['CTA', typeof brief.cta === 'string' ? brief.cta : Object.entries(brief.cta).map(function(entry) { return formatAudienceName(entry[0]) + ': ' + entry[1]; }).join(' | ')],
+        ['Price', brief.pricing]
+      ];
+      if (brief.secondary_messages && brief.secondary_messages.length) {
+        fields.splice(5, 0, ['Secondary', brief.secondary_messages.join(' · ')]);
+      }
+
+      var expandedClass = alwaysExpanded ? 'expanded always-expanded' : 'collapsed';
+      return '<div class="brief-summary ' + expandedClass + '" onclick="toggleBriefSummary(this)">' +
+        '<div class="summary-header">' +
+          '<span class="summary-title">Campaign Brief: ' + brief.name + '</span>' +
+          '<span class="chevron">' + (alwaysExpanded ? '' : '▸') + '</span>' +
+        '</div>' +
+        '<div class="summary-fields">' +
+          fields.map(function(f) {
+            return '<div class="summary-field">' +
+              '<span class="field-label">' + f[0] + '</span>' +
+              '<span class="field-value">' + f[1] + '</span>' +
+            '</div>';
+          }).join('') +
+        '</div>' +
+      '</div>';
+    }
+
+    function toggleBriefSummary(el) {
+      if (el.classList.contains('always-expanded')) return;
+      el.classList.toggle('expanded');
+      el.classList.toggle('collapsed');
+      var chevron = el.querySelector('.chevron');
+      chevron.textContent = el.classList.contains('expanded') ? '▾' : '▸';
+    }
+
+    // --- Content card rendering ---
+    function renderContentCard(piece) {
+      var metaId = 'meta-' + piece.audience + '-' + piece.channel + '-' + Math.random().toString(36).slice(2, 8);
+      return '<div class="content-card">' +
+        '<div class="card-header">' +
+          '<span class="badge badge-channel">' + formatChannelName(piece.channel) + '</span>' +
+          '<span class="badge badge-audience">' + formatAudienceName(piece.audience) + '</span>' +
+        '</div>' +
+        '<div class="copy-block">' + piece.copy + '</div>' +
+        '<div class="meta-section" id="' + metaId + '">' +
+          '<div class="meta-toggle" onclick="toggleMeta(\'' + metaId + '\')">' +
+            '<span class="meta-toggle-label">Rules & Rationale</span>' +
+            '<span class="meta-chevron">▸</span>' +
+          '</div>' +
+          '<div class="meta-content">' +
+            '<div class="meta-group">' +
+              '<span class="meta-label">Voice</span>' +
+              '<span class="meta-value">' + piece.rules_applied.voice.join(', ') + '</span>' +
+            '</div>' +
+            '<div class="meta-group">' +
+              '<span class="meta-label">Channel Register</span>' +
+              '<span class="meta-value">' + piece.rules_applied.channel_register + '</span>' +
+            '</div>' +
+            '<div class="meta-group">' +
+              '<span class="meta-label">Audience Adaptation</span>' +
+              '<span class="meta-value">' + piece.rules_applied.audience_adaptation + '</span>' +
+            '</div>' +
+            '<div class="meta-group">' +
+              '<span class="meta-label">Pillar</span>' +
+              '<span class="pillar-tag">' + piece.pillar.headline + '</span>' +
+              '<span class="meta-value pillar-resonance">' + piece.pillar.resonance + '</span>' +
+            '</div>' +
+            '<div class="rationale">' + piece.rationale + '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }
+
+    function toggleMeta(id) {
+      var section = document.getElementById(id);
+      section.classList.toggle('expanded');
+      section.querySelector('.meta-chevron').textContent =
+        section.classList.contains('expanded') ? '▾' : '▸';
+    }
+
+    // --- What-changed and package metadata rendering ---
+    function renderWhatChanged(change) {
+      return '<div class="what-changed">' +
+        '<span class="what-changed-label">What changed</span>' +
+        '<p>' + change.summary + '</p>' +
+      '</div>';
+    }
+
+    function renderPackageMetadata(meta) {
+      return '<div class="package-metadata">' +
+        '<div class="meta-group">' +
+          '<span class="meta-label">Pillar Emphasis</span>' +
+          '<span class="meta-value">' + meta.pillar_emphasis + '</span>' +
+        '</div>' +
+        '<div class="meta-group">' +
+          '<span class="meta-label">Content Hierarchy</span>' +
+          '<span class="meta-value">' + meta.content_hierarchy + '</span>' +
+        '</div>' +
+        '<div class="meta-group">' +
+          '<span class="meta-label">Suggested Timing</span>' +
+          '<span class="meta-value">' + meta.suggested_timing + '</span>' +
+        '</div>' +
+      '</div>';
+    }
+
+    // --- Main renderContent function ---
+    function renderContent() {
+      var brief = CONTENT_DATA.briefs.find(function(b) { return b.id === state.activeBrief; });
+      var gen = CONTENT_DATA.generated[state.activeBrief];
+      var summaryEl = document.getElementById('brief-summary');
+      var outputEl = document.getElementById('content-output');
+
+      var alwaysExpanded = state.activeMode === 'package';
+      summaryEl.innerHTML = renderBriefSummary(brief, alwaysExpanded);
+
+      var html = '';
+
+      switch (state.activeMode) {
+        case 'single':
+          html = renderContentCard(gen.single);
+          break;
+
+        case 'segments':
+          if (gen.segment_variants.note) {
+            html += '<div class="single-segment-note">' + gen.segment_variants.note + '</div>';
+            html += renderContentCard(gen.segment_variants.pieces[0]);
+          } else {
+            html += '<div class="variant-pair">';
+            html += gen.segment_variants.pieces.map(function(p) { return renderContentCard(p); }).join('');
+            html += '</div>';
+            if (gen.segment_variants.what_changed) {
+              html += renderWhatChanged(gen.segment_variants.what_changed);
+            }
+          }
+          break;
+
+        case 'channels':
+          gen.channel_variants.pieces.forEach(function(piece, i) {
+            html += renderContentCard(piece);
+            if (i < gen.channel_variants.pieces.length - 1 && gen.channel_variants.what_changed && gen.channel_variants.what_changed[i]) {
+              html += renderWhatChanged(gen.channel_variants.what_changed[i]);
+            }
+          });
+          break;
+
+        case 'package':
+          if (gen.campaign_package.metadata) {
+            html += renderPackageMetadata(gen.campaign_package.metadata);
+          }
+          gen.campaign_package.pieces.forEach(function(piece) {
+            html += renderContentCard(piece);
+          });
+          break;
+      }
+
+      outputEl.innerHTML = html;
+    }
   </script>
 </body>
 </html>
