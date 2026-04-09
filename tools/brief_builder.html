@@ -4,7 +4,508 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Yowie Research & Brief Builder</title>
-  <style>/* styles added in Task 2 */</style>
+  <style>
+    :root {
+      --bg-primary: #0a0a1a;
+      --bg-secondary: #12122a;
+      --bg-selector: #16213e;
+      --text-primary: #ccd6f6;
+      --text-secondary: #8892b0;
+      --accent-gold: #e2c87d;
+      --accent-teal: #64ffda;
+      --accent-red: #ff6b6b;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body, h1, h2, h3, h4, p { margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Pipeline diagram */
+    .pipeline {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .pipeline-stages {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .pipeline-stage {
+      flex: 1;
+      text-align: center;
+      cursor: pointer;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+    .pipeline-stage.teal {
+      background: rgba(100,255,218,0.06);
+      border-color: rgba(100,255,218,0.2);
+    }
+    .pipeline-stage.teal:hover {
+      background: rgba(100,255,218,0.12);
+      border-color: rgba(100,255,218,0.4);
+    }
+    .pipeline-stage.gold {
+      background: rgba(226,200,125,0.08);
+      border-color: rgba(226,200,125,0.35);
+      border-width: 2px;
+    }
+    .pipeline-stage.gold:hover {
+      background: rgba(226,200,125,0.15);
+      border-color: rgba(226,200,125,0.5);
+    }
+    .pipeline-stage.teal.active {
+      background: rgba(100,255,218,0.15);
+      border-color: rgba(100,255,218,0.5);
+    }
+    .pipeline-stage.gold.active {
+      background: rgba(226,200,125,0.18);
+      border-color: rgba(226,200,125,0.6);
+    }
+    .stage-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+    }
+    .pipeline-stage.teal .stage-label { color: var(--accent-teal); }
+    .pipeline-stage.gold .stage-label { color: var(--accent-gold); }
+    .stage-subtitle {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+    .pipeline-arrow {
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      margin: 0 -4px;
+      flex-shrink: 0;
+    }
+    .pipeline-tagline {
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      font-style: italic;
+      margin-top: 8px;
+    }
+
+    /* Layout */
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 100px);
+    }
+    .sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border);
+      padding: 24px;
+      position: fixed;
+      top: 100px;
+      left: 0;
+      bottom: 0;
+      overflow-y: auto;
+    }
+    .main {
+      margin-left: 280px;
+      flex: 1;
+      padding: 32px 40px 64px;
+      max-width: 900px;
+    }
+
+    /* Sidebar */
+    .sidebar-header h1 {
+      font-size: 1.2rem;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+    .sidebar-header p {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+    .sidebar-section { margin-top: 24px; }
+    .section-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-secondary);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .brief-card {
+      background: var(--bg-selector);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      cursor: pointer;
+      margin-bottom: 12px;
+      border-left: 3px solid transparent;
+      transition: all 0.15s ease;
+    }
+    .brief-card:hover { background: rgba(255,255,255,0.04); }
+    .brief-card.active {
+      border-left-color: var(--accent-gold);
+      background: rgba(226,200,125,0.06);
+    }
+    .brief-card h3 {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    .brief-meta {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .objective-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 12px;
+      padding: 2px 10px;
+      font-weight: 600;
+    }
+    .objective-acquisition {
+      background: rgba(255,107,107,0.15);
+      color: var(--accent-red);
+    }
+    .objective-launch {
+      background: rgba(100,255,218,0.15);
+      color: var(--accent-teal);
+    }
+    .objective-cross-sell {
+      background: rgba(179,136,255,0.15);
+      color: #b388ff;
+    }
+    .sidebar-footer {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      right: 24px;
+    }
+    .sidebar-footer p {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* Main content sections */
+    .content-section {
+      margin-bottom: 40px;
+      scroll-margin-top: 120px;
+    }
+    .section-header {
+      font-size: 1.1rem;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Competitive grid */
+    .competitor-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 900px) {
+      .competitor-grid { grid-template-columns: 1fr; }
+    }
+    .competitor-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .competitor-name {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .competitor-price {
+      font-size: 0.8rem;
+      color: var(--accent-gold);
+      margin-bottom: 8px;
+    }
+    .competitor-positioning {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .competitor-detail-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+      margin-bottom: 6px;
+      margin-top: 10px;
+    }
+    .competitor-detail-label.strengths { color: var(--accent-teal); }
+    .competitor-detail-label.weaknesses { color: var(--accent-red); }
+    .competitor-list {
+      list-style: none;
+      padding: 0;
+    }
+    .competitor-list li {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      padding: 2px 0;
+      line-height: 1.4;
+    }
+    .competitor-list li::before { margin-right: 6px; }
+    .competitor-list.strengths li::before {
+      content: "+";
+      color: var(--accent-teal);
+    }
+    .competitor-list.weaknesses li::before {
+      content: "−";
+      color: var(--accent-red);
+    }
+
+    /* Audience analysis */
+    .audience-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .audience-profile {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 900px) {
+      .audience-grid { grid-template-columns: 1fr; }
+    }
+    .audience-list-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-gold);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .audience-list {
+      list-style: none;
+      padding: 0;
+    }
+    .audience-list li {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      padding: 3px 0;
+      line-height: 1.4;
+    }
+    .audience-list li::before {
+      content: "→ ";
+      color: var(--accent-gold);
+    }
+
+    /* Positioning callout */
+    .positioning-callout {
+      background: rgba(100,255,218,0.06);
+      border: 1px solid rgba(100,255,218,0.2);
+      border-left: 3px solid var(--accent-teal);
+      border-radius: 0 8px 8px 0;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .positioning-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-teal);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .positioning-text {
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+
+    /* Seasonal note */
+    .seasonal-note {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      font-style: italic;
+      padding: 12px 16px;
+      background: var(--bg-secondary);
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      margin-top: 16px;
+      line-height: 1.5;
+    }
+
+    /* Reasoning cards */
+    .reasoning-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .reasoning-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .reasoning-header:hover { background: rgba(255,255,255,0.02); }
+    .reasoning-title {
+      font-size: 0.82rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+    .reasoning-chevron {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      transition: transform 0.2s;
+    }
+    .reasoning-body {
+      display: none;
+      padding: 0 20px 16px;
+    }
+    .reasoning-card.expanded .reasoning-body { display: block; }
+    .reasoning-text {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Brief output */
+    .brief-output {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      position: relative;
+    }
+    .brief-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(100,255,218,0.3);
+      color: var(--accent-teal);
+      font-weight: 600;
+    }
+    .brief-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 24px;
+    }
+    .brief-field {
+      display: flex;
+      flex-direction: column;
+    }
+    .brief-field.full-width { grid-column: 1 / -1; }
+    .brief-field-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .brief-field-value {
+      font-size: 0.82rem;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+    .brief-field-value.mono {
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.8rem;
+    }
+
+    /* Human review */
+    .review-card {
+      background: rgba(226,200,125,0.06);
+      border: 2px solid rgba(226,200,125,0.25);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .review-checklist {
+      list-style: none;
+      padding: 0;
+    }
+    .review-checklist li {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      padding: 6px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.4;
+    }
+    .review-checkbox {
+      width: 16px;
+      height: 16px;
+      border: 1px solid rgba(226,200,125,0.4);
+      border-radius: 3px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .review-note {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-style: italic;
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      line-height: 1.5;
+    }
+
+    /* Animation */
+    @keyframes flash-highlight {
+      0% { background-color: rgba(100,255,218,0.08); }
+      100% { background-color: transparent; }
+    }
+    .section-highlight {
+      animation: flash-highlight 1.5s ease-out;
+    }
+  </style>
 </head>
 <body>
   <!-- markup added in Task 3 -->
