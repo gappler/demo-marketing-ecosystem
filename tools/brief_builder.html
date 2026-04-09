@@ -53,6 +53,12 @@
       border: 1px solid transparent;
       transition: all 0.2s ease;
     }
+    a.pipeline-stage { text-decoration: none; }
+    a.pipeline-stage:hover { transform: translateY(-1px); }
+    .pipeline-stage.current {
+      background: rgba(100,255,218,0.15);
+      border-color: rgba(100,255,218,0.5);
+    }
     .pipeline-stage.teal {
       background: rgba(100,255,218,0.06);
       border-color: rgba(100,255,218,0.2);
@@ -1258,15 +1264,37 @@ function formatAudienceName(key) {
 function renderPipeline() {
   var container = document.getElementById('pipeline-stages');
   var html = '';
+  // Stages that belong to this tool (Brief Builder)
+  var currentStages = { raw_inputs: true, ai_research: true, draft_brief: true };
+  // Stages that link to other tools
+  var linkedStages = { content_engine: 'content_engine.html' };
+
   BUILDER_DATA.pipeline.stages.forEach(function(stage, i) {
     if (i > 0) {
       html += '<div class="pipeline-arrow">\u2192</div>';
     }
     var icon = stage.color === 'gold' ? '\u2691 ' : '';
-    html += '<div class="pipeline-stage ' + stage.color + '" data-stage="' + stage.id + '" onclick="scrollToStage(\'' + stage.id + '\')">';
-    html += '<div class="stage-label">' + icon + stage.label + '</div>';
-    html += '<div class="stage-subtitle">' + stage.subtitle + '</div>';
-    html += '</div>';
+    var isCurrent = currentStages[stage.id];
+    var link = linkedStages[stage.id];
+    var classes = 'pipeline-stage ' + stage.color + (isCurrent ? ' current' : '');
+    var subtitleText = (stage.id === 'raw_inputs') ? 'You are here' : stage.subtitle;
+
+    if (link) {
+      html += '<a class="' + classes + '" href="' + link + '">';
+      html += '<div class="stage-label">' + icon + stage.label + '</div>';
+      html += '<div class="stage-subtitle">' + stage.subtitle + '</div>';
+      html += '</a>';
+    } else if (stage.scroll_to) {
+      html += '<div class="' + classes + '" data-stage="' + stage.id + '" onclick="scrollToStage(\'' + stage.id + '\')">';
+      html += '<div class="stage-label">' + icon + stage.label + '</div>';
+      html += '<div class="stage-subtitle">' + subtitleText + '</div>';
+      html += '</div>';
+    } else {
+      html += '<div class="' + classes + '">';
+      html += '<div class="stage-label">' + icon + stage.label + '</div>';
+      html += '<div class="stage-subtitle">' + stage.subtitle + '</div>';
+      html += '</div>';
+    }
   });
   container.innerHTML = html;
   document.getElementById('pipeline-tagline').textContent = BUILDER_DATA.pipeline.tagline;

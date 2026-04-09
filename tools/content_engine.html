@@ -44,6 +44,8 @@
       flex: 1; text-align: center; padding: 8px 6px; border-radius: 8px;
       border: 1px solid transparent; transition: all 0.2s ease;
     }
+    a.pipeline-stage { text-decoration: none; cursor: pointer; }
+    a.pipeline-stage:hover { transform: translateY(-1px); }
     .pipeline-stage.teal {
       background: rgba(100,255,218,0.06); border-color: rgba(100,255,218,0.2);
     }
@@ -277,10 +279,10 @@
   <!-- Pipeline Diagram -->
   <div class="pipeline">
     <div class="pipeline-stages">
-      <div class="pipeline-stage teal">
+      <a class="pipeline-stage teal" href="brief_builder.html">
         <div class="stage-label">Brief Builder</div>
         <div class="stage-subtitle">Research & draft</div>
-      </div>
+      </a>
       <div class="pipeline-arrow">→</div>
       <div class="pipeline-stage teal">
         <div class="stage-label">⚑ Brief Approval</div>
@@ -289,7 +291,7 @@
       <div class="pipeline-arrow">→</div>
       <div class="pipeline-stage teal active-stage">
         <div class="stage-label">Content Engine</div>
-        <div class="stage-subtitle">Generate content</div>
+        <div class="stage-subtitle">You are here</div>
       </div>
       <div class="pipeline-arrow">→</div>
       <div class="pipeline-stage gold">
