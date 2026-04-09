@@ -372,6 +372,97 @@
       line-height: 1.5;
     }
 
+    /* Raw inputs */
+    .inputs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 900px) {
+      .inputs-grid { grid-template-columns: 1fr; }
+    }
+    .input-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .input-card.full-width {
+      grid-column: 1 / -1;
+    }
+    .input-card-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-gold);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .input-spec-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .input-spec-table tr {
+      border-bottom: 1px solid var(--border);
+    }
+    .input-spec-table tr:last-child {
+      border-bottom: none;
+    }
+    .input-spec-table td {
+      padding: 5px 0;
+      font-size: 0.8rem;
+      vertical-align: top;
+    }
+    .input-spec-table td:first-child {
+      color: var(--text-secondary);
+      width: 110px;
+      padding-right: 12px;
+      font-weight: 500;
+    }
+    .input-spec-table td:last-child {
+      color: var(--text-primary);
+    }
+    .input-competitor-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      padding: 5px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem;
+    }
+    .input-competitor-row:last-child {
+      border-bottom: none;
+    }
+    .input-competitor-name {
+      color: var(--text-primary);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .input-competitor-price {
+      color: var(--accent-gold);
+      white-space: nowrap;
+      font-size: 0.75rem;
+    }
+    .input-competitor-note {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+    }
+    .input-text {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .inputs-note {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-style: italic;
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      line-height: 1.4;
+    }
+
     /* Reasoning cards */
     .reasoning-card {
       background: var(--bg-secondary);
@@ -538,6 +629,13 @@
 
     <!-- Main content -->
     <main class="main">
+      <div id="section-inputs" class="content-section">
+        <div class="section-header">Raw Inputs</div>
+        <div id="inputs-content">
+          <!-- JS renders raw inputs here -->
+        </div>
+      </div>
+
       <div id="section-research" class="content-section">
         <div class="section-header">Research & Analysis</div>
         <div id="research-content">
@@ -577,7 +675,7 @@
         "label": "Raw Inputs",
         "subtitle": "Product, market, season",
         "color": "teal",
-        "scroll_to": "section-research"
+        "scroll_to": "section-inputs"
       },
       {
         "id": "ai_research",
@@ -624,6 +722,44 @@
       "description": "New customer acquisition in the cooler market \u2014 competitive positioning against premium brands",
       "product_id": "slab_35qt",
       "campaign_objective": "acquisition",
+      "raw_inputs": {
+        "product_spec": {
+          "label": "Product Spec (from Brand Definition)",
+          "entries": [
+            { "field": "Product", "value": "Slab 35QT" },
+            { "field": "Line", "value": "Coolers" },
+            { "field": "Price", "value": "$285" },
+            { "field": "Construction", "value": "Rotomolded polyethylene — one piece, no seams" },
+            { "field": "Insulation", "value": "3\" commercial-grade, pressure-injected" },
+            { "field": "Ice Retention", "value": "5+ days in 90°F ambient" },
+            { "field": "Certifications", "value": "Bear-resistant (IGBC listed)" },
+            { "field": "Hardware", "value": "Marine-grade stainless steel" },
+            { "field": "Capacity", "value": "35 quarts / 24 cans + ice" },
+            { "field": "Weight", "value": "22 lbs" }
+          ]
+        },
+        "competitive_summary": {
+          "label": "Competitive Landscape (human-provided)",
+          "entries": [
+            { "competitor": "YETI Tundra 35", "price": "$300–$350", "note": "Market leader, lifestyle positioning, heavy brand premium" },
+            { "competitor": "Stanley", "price": "$150–$250", "note": "Viral social momentum, fashion-adjacent, inconsistent quality" },
+            { "competitor": "RTIC 35 QT", "price": "$170–$200", "note": "Value play, 'same as YETI for less', copycat perception" },
+            { "competitor": "Igloo BMX 25", "price": "$40–$60", "note": "Budget/disposable, breaks in 1-3 seasons" }
+          ]
+        },
+        "target_audience": {
+          "label": "Target Audience",
+          "value": "Casual outdoor buyers — car campers, fishers, tailgaters. Quality-aware but not gear-obsessed. Tired of replacing cheap coolers. Skeptical of premium brand markups."
+        },
+        "campaign_objective": {
+          "label": "Campaign Objective",
+          "value": "New customer acquisition in the cooler market. Reach buyers who don't know Yowie exists. Position against premium cooler brands on quality-per-dollar."
+        },
+        "seasonal_context": {
+          "label": "Seasonal Context",
+          "value": "Launch in early spring (March-April) to capture pre-season cooler research. Peak purchase window is April-July."
+        }
+      },
       "research": {
         "competitive_landscape": [
           {
@@ -754,6 +890,44 @@
       "description": "Product launch targeting cold-weather specialists \u2014 the most spec-literate audience",
       "product_id": "lowline_2p",
       "campaign_objective": "launch",
+      "raw_inputs": {
+        "product_spec": {
+          "label": "Product Spec (from Brand Definition)",
+          "entries": [
+            { "field": "Product", "value": "Lowline 2P" },
+            { "field": "Line", "value": "Tents" },
+            { "field": "Price", "value": "$475" },
+            { "field": "Fly", "value": "30D ripstop nylon, 3000mm waterproof coating" },
+            { "field": "Poles", "value": "DAC Featherlite aluminum" },
+            { "field": "Profile", "value": "40\" peak height — low-profile, wide footprint" },
+            { "field": "Vestibules", "value": "Two, full-coverage rain protection" },
+            { "field": "Floor", "value": "Bathtub floor with sealed seams" },
+            { "field": "Pitch", "value": "Freestanding — stakes optional on hard ground" },
+            { "field": "Weight", "value": "4 lbs 8 oz packed" }
+          ]
+        },
+        "competitive_summary": {
+          "label": "Competitive Landscape (human-provided)",
+          "entries": [
+            { "competitor": "MSR Access Series", "price": "$500–$700", "note": "Ski-touring focus, four-season, heavier than needed for three-season" },
+            { "competitor": "Hilleberg Anjan 2", "price": "$700–$850", "note": "Expedition-grade, legendary build, extreme price premium" },
+            { "competitor": "Big Agnes Copper Spur", "price": "$400–$450", "note": "Ultralight priority, poor wind performance above treeline" },
+            { "competitor": "REI Half Dome 2 Plus", "price": "$250–$350", "note": "Generalist, adequate materials, no conditions optimization" }
+          ]
+        },
+        "target_audience": {
+          "label": "Target Audience",
+          "value": "Cold-weather specialists — camp in snow, at altitude, in shoulder seasons. Most spec-literate segment. Trust lab testing over marketing. Will pay premium if specs justify it."
+        },
+        "campaign_objective": {
+          "label": "Campaign Objective",
+          "value": "Product launch to cold-weather niche. Introduce the Lowline 2P as a purpose-built wind-resistant tent at a price between ultralight and expedition options."
+        },
+        "seasonal_context": {
+          "label": "Seasonal Context",
+          "value": "Target late August launch to capture pre-season researchers planning fall/winter trips. Secondary window in January-February for spring trip planning."
+        }
+      },
       "research": {
         "competitive_landscape": [
           {
@@ -884,6 +1058,44 @@
       "description": "Cross-pollination campaign \u2014 introduce the Foldout to existing Slab 35QT buyers",
       "product_id": "foldout",
       "campaign_objective": "cross-sell",
+      "raw_inputs": {
+        "product_spec": {
+          "label": "Product Spec (from Brand Definition)",
+          "entries": [
+            { "field": "Product", "value": "Foldout Soft Cooler" },
+            { "field": "Line", "value": "Coolers" },
+            { "field": "Price", "value": "$145" },
+            { "field": "Exterior", "value": "840D TPU-coated polyester" },
+            { "field": "Liner", "value": "Welded leak-proof interior" },
+            { "field": "Insulation", "value": "Closed-cell foam — 24-hour ice retention" },
+            { "field": "Closure", "value": "Wide-mouth with magnetic closure" },
+            { "field": "Storage", "value": "Folds flat to 3\" for storage" },
+            { "field": "Capacity", "value": "24 cans + ice" },
+            { "field": "Weight", "value": "3 lbs 2 oz" }
+          ]
+        },
+        "competitive_summary": {
+          "label": "Competitive Landscape (human-provided)",
+          "entries": [
+            { "competitor": "YETI Hopper Flip 18", "price": "$250–$350", "note": "Premium soft cooler, same lifestyle tax as hard cooler line" },
+            { "competitor": "Hydro Flask Day Escape", "price": "$125–$175", "note": "Lifestyle-adjacent, style over substance, zipper issues" },
+            { "competitor": "Coleman Soft Coolers", "price": "$25–$40", "note": "Disposable, zippers and liners fail within months" },
+            { "competitor": "Engel HD30", "price": "$110–$140", "note": "Marine/fishing focus, tough but ugly, unknown outside niche" }
+          ]
+        },
+        "target_audience": {
+          "label": "Target Audience",
+          "value": "Existing Slab 35QT buyers. Already trust Yowie. Chose quality over brand tax once — receptive to doing it again for a complementary product."
+        },
+        "campaign_objective": {
+          "label": "Campaign Objective",
+          "value": "Cross-sell to existing customers (Phase 3 strategy). Introduce the Foldout as the everyday counterpart to the Slab — not a replacement, but the right tool for a different job."
+        },
+        "seasonal_context": {
+          "label": "Seasonal Context",
+          "value": "Cross-sell 2-4 weeks after Slab purchase for new buyers. For existing buyers, launch email sequence in April-May as warm-weather use cases peak."
+        }
+      },
       "research": {
         "competitive_landscape": [
           {
@@ -1092,7 +1304,60 @@ function selectBrief(briefId) {
   state.activeBrief = briefId;
   renderBriefList();
   renderContent();
-  document.getElementById('section-research').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('section-inputs').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function renderRawInputs(brief) {
+  var ri = brief.raw_inputs;
+  var html = '';
+
+  html += '<div class="inputs-grid">';
+
+  // Product spec table
+  html += '<div class="input-card">';
+  html += '<div class="input-card-label">' + ri.product_spec.label + '</div>';
+  html += '<table class="input-spec-table">';
+  ri.product_spec.entries.forEach(function(e) {
+    html += '<tr><td>' + e.field + '</td><td>' + e.value + '</td></tr>';
+  });
+  html += '</table>';
+  html += '</div>';
+
+  // Competitive summary
+  html += '<div class="input-card">';
+  html += '<div class="input-card-label">' + ri.competitive_summary.label + '</div>';
+  ri.competitive_summary.entries.forEach(function(e) {
+    html += '<div class="input-competitor-row">';
+    html += '<span class="input-competitor-name">' + e.competitor + '</span>';
+    html += '<span class="input-competitor-price">' + e.price + '</span>';
+    html += '<span class="input-competitor-note">' + e.note + '</span>';
+    html += '</div>';
+  });
+  html += '</div>';
+
+  // Target audience
+  html += '<div class="input-card">';
+  html += '<div class="input-card-label">' + ri.target_audience.label + '</div>';
+  html += '<div class="input-text">' + ri.target_audience.value + '</div>';
+  html += '</div>';
+
+  // Campaign objective
+  html += '<div class="input-card">';
+  html += '<div class="input-card-label">' + ri.campaign_objective.label + '</div>';
+  html += '<div class="input-text">' + ri.campaign_objective.value + '</div>';
+  html += '</div>';
+
+  // Seasonal context
+  html += '<div class="input-card full-width">';
+  html += '<div class="input-card-label">' + ri.seasonal_context.label + '</div>';
+  html += '<div class="input-text">' + ri.seasonal_context.value + '</div>';
+  html += '</div>';
+
+  html += '</div>';
+
+  html += '<div class="inputs-note">These are the human-provided inputs that start the process. Everything below is AI-generated from these inputs and the Brand Configuration Layer.</div>';
+
+  return html;
 }
 
 function renderResearch(brief) {
@@ -1229,6 +1494,7 @@ function renderReview() {
 
 function renderContent() {
   var brief = BUILDER_DATA.briefs.find(function(b) { return b.id === state.activeBrief; });
+  document.getElementById('inputs-content').innerHTML = renderRawInputs(brief);
   document.getElementById('research-content').innerHTML = renderResearch(brief);
   document.getElementById('reasoning-content').innerHTML = renderReasoning(brief);
   document.getElementById('brief-content').innerHTML = renderBriefOutput(brief);
