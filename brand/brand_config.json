@@ -1,0 +1,175 @@
+{
+  "meta": {
+    "version": "1.0",
+    "date": "2026-04-09",
+    "source": "brand/brand_definition.md"
+  },
+  "voice": {
+    "core_attributes": {
+      "plainspoken": {
+        "description": "Short sentences, common words, no jargon unless the audience actually uses it. If a ten-dollar word exists where a two-dollar word works, use the two-dollar word.",
+        "rules": [
+          "Use short sentences.",
+          "Use common, everyday words.",
+          "Use technical jargon only when the target audience genuinely uses it (e.g., fill power, denier, waterproof rating).",
+          "Never use a complex word when a simpler one works."
+        ]
+      },
+      "confident": {
+        "description": "Yowie knows what it built and why. No hedging, no qualifiers. State what the product does. If there is a trade-off, state that too.",
+        "rules": [
+          "State product capabilities directly without hedging.",
+          "Do not use phrases like 'we believe' or 'we strive'.",
+          "Acknowledge trade-offs honestly rather than hiding or softening them.",
+          "Never use qualifiers that undermine a direct claim."
+        ]
+      },
+      "restrained": {
+        "description": "No exclamation points. No superlatives without evidence. Undersell and overdeliver. 'Built for' is a phrase Yowie uses often.",
+        "rules": [
+          "Never use exclamation points.",
+          "Never use superlatives ('best', 'ultimate', 'perfect') without concrete evidence.",
+          "Prefer 'built for' over aspirational or hyperbolic framing.",
+          "Let the product facts do the selling — avoid hype language."
+        ]
+      },
+      "dry": {
+        "description": "A sense of humor that doesn't try hard. The humor lives in product names and the occasional aside, not in the copy itself.",
+        "rules": [
+          "Humor belongs in product names and brief asides, not in marketing copy.",
+          "Never force jokes or try-hard wit.",
+          "Deadpan tone is appropriate — let the reader find the funny.",
+          "Avoid playful or whimsical language in technical or feature descriptions."
+        ]
+      }
+    },
+    "channels": {
+      "product_page": {
+        "register": "Technical, direct",
+        "rules": [
+          "Lead with specs and materials.",
+          "Use fragment sentences where appropriate for density.",
+          "Include precise measurements and ratings.",
+          "No lifestyle framing or aspirational language."
+        ],
+        "example": "500D Cordura body. Rated to 45 lbs. 4 lbs 2 oz."
+      },
+      "email": {
+        "register": "Conversational, brief",
+        "rules": [
+          "Keep it short — respect the reader's time.",
+          "Introduce the product, name the key benefit, point to details.",
+          "No preamble or throat-clearing.",
+          "Conversational but not casual to the point of vagueness."
+        ],
+        "example": "New tent. Low profile. Handles wind. Details below."
+      },
+      "social_media": {
+        "register": "Casual, dry",
+        "rules": [
+          "Lean into dry humor and understatement.",
+          "One idea per post — no stacking of features.",
+          "Let the product name or a single fact carry the post.",
+          "Never use hashtag-heavy or influencer-style copy."
+        ],
+        "example": "The Dirtbag. Named after its target market."
+      },
+      "customer_service": {
+        "register": "Helpful, no-nonsense",
+        "rules": [
+          "Acknowledge the issue immediately.",
+          "State the resolution clearly and without hedging.",
+          "No corporate filler phrases or apologetic over-explanation.",
+          "Move directly to next steps."
+        ],
+        "example": "That shouldn't happen. Send a photo and we'll replace it."
+      }
+    },
+    "audience_adaptations": {
+      "backcountry": {
+        "applies_to": ["backcountry_hikers", "thru_hikers", "cold_weather"],
+        "approach": "Write with assumed technical literacy. Provide full specs and material details without translation. Trust that the reader knows what the data means.",
+        "assumed_knowledge": [
+          "What denier ratings mean",
+          "Why fill power matters",
+          "The difference between comfort rating and lower limit",
+          "What DAC poles are and why they matter"
+        ],
+        "guidelines": [
+          "Include precise technical specs without simplifying them.",
+          "Do not explain what specs mean unless explaining a genuine trade-off.",
+          "Use terms like fill power, denier, DWR, baffle construction freely.",
+          "Speak peer-to-peer — the reader is as experienced as the copywriter."
+        ]
+      },
+      "casual": {
+        "applies_to": ["casual_car_camping"],
+        "approach": "Translate specs into outcomes. Focus on what the product does, not how it works. Avoid gear-nerd jargon. Still plainspoken, confident, restrained, and dry — just with plain-English framing.",
+        "assumed_knowledge": [
+          "General awareness of product categories (coolers, tents, bags)",
+          "Experience with cheaper versions of the same product failing",
+          "Price sensitivity and skepticism of premium brand markups"
+        ],
+        "guidelines": [
+          "Translate technical specs into observable outcomes (e.g., 'keeps ice five days' not '3-inch pressure-injected insulation').",
+          "Focus on what the product does rather than how it is built.",
+          "Avoid jargon specific to gear enthusiasts.",
+          "Connect quality to value — frame durability as a savings argument."
+        ]
+      }
+    }
+  },
+  "terminology": {
+    "approved": [
+      { "term": "built", "note": "Core Yowie verb — implies intentional construction and purpose." },
+      { "term": "engineered", "note": "Use when emphasizing design precision or structural choices." },
+      { "term": "designed", "note": "Use when describing intentional form or feature decisions." },
+      { "term": "rated", "note": "Use with specific numeric values — rated to 45 lbs, comfort-rated to 30°F." },
+      { "term": "tested", "note": "Use only when actual testing occurred; pairs with measurable outcomes." },
+      { "term": "measured", "note": "Use with quantified results — weight, capacity, retention times." },
+      { "term": "durable", "note": "Preferred over 'tough' or 'rugged' — implies longevity without bravado." },
+      { "term": "reliable", "note": "Use for performance consistency across conditions." },
+      { "term": "functional", "note": "Use when contrasting with aesthetic-only features or brand-driven design." },
+      { "term": "handles", "note": "Action verb for describing product performance — 'handles wind', 'handles loads'." },
+      { "term": "manages", "note": "Use for control and regulation — 'manages load transfer', 'manages moisture'." },
+      { "term": "performs", "note": "Use for outcome-focused descriptions — 'performs in conditions'." },
+      { "term": "honest", "note": "Use to describe Yowie's communication approach and trade-off transparency." },
+      { "term": "straightforward", "note": "Use to describe simplicity in design or communication." },
+      { "term": "direct", "note": "Use to describe Yowie's voice and product intent." }
+    ],
+    "forbidden": [
+      { "term": "revolutionary", "reason": "Hyperbolic — implies a break from prior art that rarely exists." },
+      { "term": "game-changing", "reason": "Marketing cliché with no specific meaning." },
+      { "term": "innovative", "reason": "Vague and overused — describe the specific innovation instead." },
+      { "term": "passionate", "reason": "Performative emotion — Yowie demonstrates commitment through product, not feeling." },
+      { "term": "inspired", "reason": "Vague and aspirational — not Yowie's register." },
+      { "term": "curated", "reason": "Lifestyle brand language — implies editorial taste over function." },
+      { "term": "adventure", "reason": "Aspirational lifestyle framing — Yowie describes conditions, not emotions." },
+      { "term": "journey", "reason": "Aspirational framing — too narrative and lifestyle-coded." },
+      { "term": "epic", "reason": "Hyperbolic enthusiasm — antithetical to restrained, dry voice." },
+      { "term": "best", "reason": "Superlative without evidence — Yowie never claims best, it describes what the product does." },
+      { "term": "ultimate", "reason": "Superlative without evidence — implies nothing better exists." },
+      { "term": "perfect", "reason": "Superlative without evidence — also implies no trade-offs, which contradicts honest voice." }
+    ],
+    "conditional": [
+      {
+        "term": "sustainable",
+        "rule": "Do not use as a leading marketing claim. Use only as a factual description when stating specific material or packaging choices.",
+        "correct": "Recycled nylon shell fabric.",
+        "incorrect": "Yowie is committed to sustainable gear."
+      },
+      {
+        "term": "eco-friendly",
+        "rule": "Avoid as a standalone descriptor. If used, pair with a specific, verifiable claim about materials or packaging.",
+        "correct": "Recycled polyester fly fabric and minimal packaging — no clamshells, no tissue paper.",
+        "incorrect": "An eco-friendly tent for environmentally conscious campers."
+      },
+      {
+        "term": "lightweight",
+        "rule": "Use only when weight is a genuine design goal for the product. Do not apply to products where weight is intentionally secondary to durability.",
+        "correct": "Ridgeline 22L. 1 lb 6 oz. Built light for summit pushes.",
+        "incorrect": "Lightweight construction throughout the Basecamp 45L."
+      }
+    ]
+  }
+}
