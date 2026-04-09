@@ -5,25 +5,28 @@ version: 1.0
 
 # Process Log
 
-## 2026-04-09 — Build Brand Config JSON: meta, voice, terminology
+## 2026-04-09 — Brand Configuration Layer
 
-**Prompt:** Create `brand/brand_config.json` with `meta`, `voice`, and `terminology` sections. The JSON must contain: meta (version, date, source), voice.core_attributes (four attributes: plainspoken, confident, restrained, dry — each with description and rules array), voice.channels (four channels: product_page, email, social_media, customer_service — each with register, rules, and example), voice.audience_adaptations (two modes: backcountry and casual — each with applies_to, approach, assumed_knowledge, and guidelines), terminology.approved (array with term and note), terminology.forbidden (array with term and reason), terminology.conditional (array with term, rule, correct, and incorrect).
+**Prompt:** Build the Brand Configuration Layer for Yowie. This is not a document — it's the rules engine that governs every piece of content the ecosystem produces. Read the brand definition and create a structured configuration that encodes: voice attributes and channel-specific registers, audience-specific voice adaptations (backcountry vs. casual), messaging hierarchy by product line and audience segment, approved and forbidden terminology, style standards, and compliance rules. Output as an interactive HTML tool where I can browse the configuration, see how rules apply to different product/audience/channel combinations, and preview how the voice shifts by context.
 
-**What was built:** `brand/brand_config.json` — a machine-readable JSON file capturing Yowie's brand voice, channel-specific communication rules, audience adaptation guidance, and approved/forbidden/conditional terminology, all derived from `brand/brand_definition.md`.
+**What was built:** Two files — a structured JSON rules engine (`brand/brand_config.json`) encoding all brand voice, terminology, messaging, and compliance rules, and an interactive HTML viewer (`tools/brand_config_viewer.html`) with product/audience/channel selectors that show combined rulesets and copy previews.
 
 **Key decisions:**
 
-- Derived all voice attribute descriptions and rules directly from the Brand Voice Guidelines section (section 5) of `brand_definition.md`, preserving the original language where possible
-- Used exact example strings from the voice-by-channel table in the source document
-- Mapped backcountry audience adaptation to three audience slugs (`backcountry_hikers`, `thru_hikers`, `cold_weather`) to reflect section 3 audience profiles
-- Expanded terminology entries with `note` and `reason` fields that add context from the broader brand definition, not just the word lists
-- Added conditional terminology rules with concrete correct/incorrect examples drawn from product copy in section 2
+- JSON config as machine-readable source of truth, separate from the HTML viewer, so future tools can import the rules programmatically
+- Selector panel UI (product x audience x channel) over matrix view — matches the real workflow of "I'm writing for X, show me the rules"
+- Static hand-crafted copy examples (22 total) over generated templates — the voice is too nuanced for templates to capture
+- Single self-contained HTML file with embedded config — no server, no dependencies, any team member can open it
+- Messaging pillar ranking computed by averaging product-line and audience emphasis indices, with audience emphasis as tiebreaker
+- URL hash state for bookmarking specific combinations
+- Terminology split into three tiers: approved (with usage notes), forbidden (with reasons), conditional (with correct/incorrect examples)
 
 **Files created or modified:**
 
 - `brand/brand_config.json` (created)
+- `tools/brand_config_viewer.html` (created)
 - `docs/process_log.md` (modified)
-- `tutorials/02_brand_config_json.md` (created)
+- `tutorials/02_brand_config_layer.md` (created)
 
 ---
 
