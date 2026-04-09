@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yowie Content Engine</title>
+  <style>/* styles added later */</style>
+</head>
+<body>
+  <!-- markup added later -->
+  <script>
+    const CONTENT_DATA = {
+      "briefs": [
+        {
+          "id": "lowline_launch",
+          "name": "Lowline 2P Launch",
+          "description": "New product launch — introduce the Lowline 2P tent to backcountry and cold-weather audiences",
+          "product_id": "lowline_2p",
+          "product_line": "tents",
+          "audience_segments": ["backcountry_hikers", "cold_weather"],
+          "channels": ["product_page", "email", "social_media"],
+          "campaign_stage": "launch",
+          "primary_message": "Built low and tight because ridgeline wind doesn't care about your headroom",
+          "secondary_messages": ["Freestanding pitch — stakes optional on hard ground", "Recycled polyester fly fabric"],
+          "pricing": "$475",
+          "proof_points": ["3000mm waterproof coating", "DAC Featherlite poles", "4 lbs 8 oz packed", "Two vestibules"],
+          "tone_override": null,
+          "cta": "See full specs",
+          "personalization_variables": [],
+          "default_mode": "single"
+        },
+        {
+          "id": "basecamp_4p_cross",
+          "name": "Basecamp 4P Cross-Segment",
+          "description": "Same tent, two audiences — demonstrate how copy adapts for backcountry vs. casual buyers",
+          "product_id": "basecamp_4p",
+          "product_line": "tents",
+          "audience_segments": ["backcountry_hikers", "casual_car_camping"],
+          "channels": ["product_page", "email"],
+          "campaign_stage": "education",
+          "primary_message": "A shelter for groups who set up and stay put",
+          "secondary_messages": ["Footprint included", "Handles sustained wind"],
+          "pricing": "$695",
+          "proof_points": ["5000mm waterproof coating", "DAC Pressfit poles", "Near-vertical walls", "9 lbs 4 oz"],
+          "tone_override": null,
+          "cta": {"backcountry_hikers": "Check the specs", "casual_car_camping": "See what's included"},
+          "personalization_variables": [],
+          "default_mode": "segments"
+        },
+        {
+          "id": "slab_acquisition",
+          "name": "Slab 35QT Acquisition",
+          "description": "Cooler market entry — competitive positioning against premium cooler brands",
+          "product_id": "slab_35qt",
+          "product_line": "coolers",
+          "audience_segments": ["casual_car_camping"],
+          "channels": ["social_media", "email", "landing_page"],
+          "campaign_stage": "acquisition",
+          "primary_message": "Same quality as the $400 coolers. No logo tax.",
+          "secondary_messages": ["You can stand on it, sit on it, drag it across gravel"],
+          "pricing": "$285",
+          "proof_points": ["5-day ice retention in 90°F heat", "Rotomolded — one piece, no seams", "Bear-resistant certified", "$285"],
+          "tone_override": null,
+          "cta": "Compare for yourself",
+          "personalization_variables": [],
+          "default_mode": "channels"
+        },
+        {
+          "id": "burrow_seasonal",
+          "name": "Burrow 0°F Seasonal",
+          "description": "Winter prep campaign — seasonal urgency for cold-weather and backcountry segments",
+          "product_id": "burrow_0f",
+          "product_line": "sleeping_bags",
+          "audience_segments": ["cold_weather", "backcountry_hikers"],
+          "channels": ["email", "social_media", "product_page"],
+          "campaign_stage": "seasonal",
+          "primary_message": "Winter doesn't care if you're cold. The Burrow does.",
+          "secondary_messages": ["DWR-coated shell sheds moisture before it reaches the down", "Full-length insulated draft tube"],
+          "pricing": "$445",
+          "proof_points": ["800-fill goose down", "0°F comfort rating", "Trapezoidal baffles", "DWR-coated recycled shell"],
+          "tone_override": null,
+          "cta": "Built for real winter",
+          "personalization_variables": [],
+          "default_mode": "package"
+        }
+      ],
+      "generated": {
+        "lowline_launch": {
+          "single": {
+            "audience": "backcountry_hikers",
+            "channel": "product_page",
+            "copy": "40-inch peak height. Two vestibules. DAC Featherlite poles. 3000mm waterproof coating on a recycled polyester fly. 4 lbs 8 oz packed. Built low and tight because the ridgeline wind that flattens tall tents treats this one like a rock. Sealed seams, bathtub floor, freestanding pitch.",
+            "rules_applied": {
+              "voice": ["plainspoken", "confident", "restrained", "dry"],
+              "channel_register": "Technical, direct",
+              "audience_adaptation": "Backcountry — assumed technical literacy, specs stated without translation"
+            },
+            "pillar": {
+              "id": "built_for_job",
+              "headline": "Built for the job, not the brand.",
+              "resonance": "We respect the job you're doing and built gear that matches it."
+            },
+            "rationale": "Product page for backcountry audience leads with specs stated as facts. Low-profile design rationale is stated plainly — function drives form. No lifestyle framing."
+          },
+          "segment_variants": {
+            "pieces": [
+              {
+                "audience": "backcountry_hikers",
+                "channel": "product_page",
+                "copy": "40-inch peak height. Two vestibules. DAC Featherlite poles. 3000mm waterproof coating on a recycled polyester fly. 4 lbs 8 oz packed. Built low and tight because the ridgeline wind that flattens tall tents treats this one like a rock. Sealed seams, bathtub floor, freestanding pitch.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Technical, direct",
+                  "audience_adaptation": "Backcountry — assumed technical literacy, specs stated without translation"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "We respect the job you're doing and built gear that matches it."
+                },
+                "rationale": "Product page for backcountry audience leads with specs stated as facts. Low-profile design rationale is stated plainly — function drives form. No lifestyle framing."
+              },
+              {
+                "audience": "cold_weather",
+                "channel": "product_page",
+                "copy": "3000mm waterproof coating. DAC Featherlite poles. Sealed seams with bathtub floor. 40-inch peak height keeps the profile below wind shear. Two vestibules for gear storage in conditions where gear stays wet. 4 lbs 8 oz. Built for exposed camps where the weather is the reason you need a tent.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Technical, direct",
+                  "audience_adaptation": "Backcountry — cold-weather specialists, emphasis on weather performance"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "We respect the job you're doing and built gear that matches it."
+                },
+                "rationale": "Cold-weather audience gets the same technical density but with emphasis on weather performance and gear management in wet conditions. The closing line frames the tent as safety equipment, not recreation gear."
+              }
+            ],
+            "what_changed": {
+              "from": "backcountry_hikers",
+              "to": "cold_weather",
+              "summary": "Cold-weather variant shifts emphasis from structural specs to weather performance. '40-inch peak height' is reframed from a spec to a wind-shear advantage. Vestibules are positioned for wet-gear management, not just storage."
+            }
+          },
+          "channel_variants": {
+            "pieces": [
+              {
+                "audience": "backcountry_hikers",
+                "channel": "product_page",
+                "copy": "40-inch peak height. Two vestibules. DAC Featherlite poles. 3000mm waterproof coating on a recycled polyester fly. 4 lbs 8 oz packed. Built low and tight because the ridgeline wind that flattens tall tents treats this one like a rock. Sealed seams, bathtub floor, freestanding pitch.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Technical, direct",
+                  "audience_adaptation": "Backcountry — assumed technical literacy, specs stated without translation"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "We respect the job you're doing and built gear that matches it."
+                },
+                "rationale": "Product page for backcountry audience leads with specs stated as facts. Low-profile design rationale is stated plainly — function drives form. No lifestyle framing."
+              },
+              {
+                "audience": "backcountry_hikers",
+                "channel": "email",
+                "copy": "The Lowline 2P. Low profile, two vestibules, DAC Featherlite poles. 3000mm waterproof coating. 4 lbs 8 oz. Built for ridgelines and exposed camps where tall tents become kites. Full specs on the site.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Conversational, brief",
+                  "audience_adaptation": "Backcountry — assumed technical literacy, specs stated without translation"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "We respect the job you're doing and built gear that matches it."
+                },
+                "rationale": "Email register drops to conversational — fewer specs, key benefits only, points reader to full details. Same confidence, shorter format."
+              },
+              {
+                "audience": "backcountry_hikers",
+                "channel": "social_media",
+                "copy": "40 inches tall. Handles ridgeline wind. The Lowline 2P — named for the thing that keeps it standing.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Casual, dry",
+                  "audience_adaptation": "Backcountry — assumed technical literacy"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "We respect the job you're doing and built gear that matches it."
+                },
+                "rationale": "Social register strips to one idea with dry humor. 'Named for the thing that keeps it standing' is a deadpan aside — the humor lives in the observation, not a punchline."
+              }
+            ],
+            "what_changed": [
+              {
+                "from": "product_page",
+                "to": "email",
+                "summary": "Email register drops to conversational — fewer specs, key benefits only, points reader to full details. Same confidence, shorter format."
+              },
+              {
+                "from": "email",
+                "to": "social_media",
+                "summary": "Social register strips to one idea with dry humor. 'Named for the thing that keeps it standing' is a deadpan aside — the humor lives in the observation, not a punchline."
+              }
+            ]
+          },
+          "campaign_package": {
+            "metadata": {
+              "suggested_timing": "Product page goes live first as the reference destination. Email to subscriber list same day. Social posts staggered over 3 days — one feature angle per post.",
+              "content_hierarchy": "Product page is the anchor. Email drives traffic to it. Social builds awareness with single-fact posts.",
+              "pillar_emphasis": "Built for the job — the low profile is a design decision driven by function, not aesthetics."
+            },
+            "pieces": [
+              {
+                "audience": "backcountry_hikers",
+                "channel": "product_page",
+                "copy": "40-inch peak height. Two vestibules. DAC Featherlite poles. 3000mm waterproof coating on a recycled polyester fly. 4 lbs 8 oz packed. Built low and tight because the ridgeline wind that flattens tall tents treats this one like a rock. Sealed seams, bathtub floor, freestanding pitch.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Technical, direct",
+                  "audience_adaptation": "Backcountry — assumed technical literacy, specs stated without translation"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "We respect the job you're doing and built gear that matches it."
+                },
+                "rationale": "Product page for backcountry audience leads with specs stated as facts. Low-profile design rationale is stated plainly — function drives form. No lifestyle framing."
+              },
+              {
+                "audience": "cold_weather",
+                "channel": "product_page",
+                "copy": "3000mm waterproof coating. DAC Featherlite poles. Sealed seams with bathtub floor. 40-inch peak height keeps the profile below wind shear. Two vestibules for gear storage in conditions where gear stays wet. 4 lbs 8 oz. Built for exposed camps where the weather is the reason you need a tent.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Technical, direct",
+                  "audience_adaptation": "Backcountry — cold-weather specialists, emphasis on weather performance"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "We respect the job you're doing and built gear that matches it."
+                },
+                "rationale": "Cold-weather audience gets the same technical density but with emphasis on weather performance and gear management in wet conditions. The closing line frames the tent as safety equipment, not recreation gear."
+              },
+              {
+                "audience": "backcountry_hikers",
+                "channel": "email",
+                "copy": "The Lowline 2P. Low profile, two vestibules, DAC Featherlite poles. 3000mm waterproof coating. 4 lbs 8 oz. Built for ridgelines and exposed camps where tall tents become kites. Full specs on the site.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Conversational, brief",
+                  "audience_adaptation": "Backcountry — assumed technical literacy, specs stated without translation"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "We respect the job you're doing and built gear that matches it."
+                },
+                "rationale": "Email register drops to conversational — fewer specs, key benefits only, points reader to full details. Same confidence, shorter format."
+              },
+              {
+                "audience": "backcountry_hikers",
+                "channel": "social_media",
+                "copy": "40 inches tall. Handles ridgeline wind. The Lowline 2P — named for the thing that keeps it standing.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Casual, dry",
+                  "audience_adaptation": "Backcountry — assumed technical literacy"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "We respect the job you're doing and built gear that matches it."
+                },
+                "rationale": "Social register strips to one idea with dry humor. 'Named for the thing that keeps it standing' is a deadpan aside — the humor lives in the observation, not a punchline."
+              },
+              {
+                "audience": "cold_weather",
+                "channel": "email",
+                "copy": "The Lowline 2P. 3000mm waterproof, sealed seams, DAC Featherlite poles. 40-inch profile sits below wind shear. Two vestibules keep wet gear out of the sleeping area. Details and full specs on the site.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Conversational, brief",
+                  "audience_adaptation": "Backcountry — cold-weather specialists, weather performance emphasis"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "We respect the job you're doing and built gear that matches it."
+                },
+                "rationale": "Cold-weather email keeps spec density high — this audience reads specs even in email. Vestibule framing shifts to wet-gear management."
+              },
+              {
+                "audience": "cold_weather",
+                "channel": "social_media",
+                "copy": "3000mm waterproof. 40-inch profile. Built for the camps where weather is the point. The Lowline 2P.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Casual, dry",
+                  "audience_adaptation": "Backcountry — cold-weather specialists"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "We respect the job you're doing and built gear that matches it."
+                },
+                "rationale": "Cold-weather social leads with the two specs this audience cares about most. 'Where weather is the point' defines the buyer without selling to them."
+              }
+            ]
+          }
+        },
+        "basecamp_4p_cross": {
+          "single": {
+            "audience": "backcountry_hikers",
+            "channel": "product_page",
+            "copy": "9 lbs 4 oz. DAC Pressfit poles oversized for sustained wind load. 5000mm waterproof coating on recycled polyester fly. Near-vertical walls for livable volume. Two doors, two vestibules. Footprint included. This is not a backpacking tent. It is a basecamp for groups who set up, stay put, and run day missions from a fixed camp.",
+            "rules_applied": {
+              "voice": ["plainspoken", "confident", "restrained", "dry"],
+              "channel_register": "Technical, direct",
+              "audience_adaptation": "Backcountry — assumed technical literacy, specs stated without translation"
+            },
+            "pillar": {
+              "id": "built_for_job",
+              "headline": "Built for the job, not the brand.",
+              "resonance": "We respect the job you're doing and built gear that matches it."
+            },
+            "rationale": "Leads with weight as an honest statement, not a selling point. Explains what the tent is by first explaining what it isn't — backcountry audience respects that honesty."
+          },
+          "segment_variants": {
+            "pieces": [
+              {
+                "audience": "backcountry_hikers",
+                "channel": "product_page",
+                "copy": "9 lbs 4 oz. DAC Pressfit poles oversized for sustained wind load. 5000mm waterproof coating on recycled polyester fly. Near-vertical walls for livable volume. Two doors, two vestibules. Footprint included. This is not a backpacking tent. It is a basecamp for groups who set up, stay put, and run day missions from a fixed camp.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Technical, direct",
+                  "audience_adaptation": "Backcountry — assumed technical literacy, specs stated without translation"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "We respect the job you're doing and built gear that matches it."
+                },
+                "rationale": "Leads with weight as an honest statement, not a selling point. Explains what the tent is by first explaining what it isn't — backcountry audience respects that honesty."
+              },
+              {
+                "audience": "casual_car_camping",
+                "channel": "product_page",
+                "copy": "Room for four adults and their gear without anyone hunching over. Two doors so nobody climbs over anybody at 2 AM. Handles heavy rain and sustained wind — 5000mm waterproof rating means serious waterproofing. Footprint included so you don't buy it separately. Sets up at camp and stays standing while you go do things.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Technical, direct — adjusted for casual audience",
+                  "audience_adaptation": "Casual — specs translated to observable outcomes, no jargon"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "This does what you need. Nothing extra."
+                },
+                "rationale": "Casual audience gets the same product facts translated to lived outcomes. '5000mm waterproof' is explained. 'Near-vertical walls' becomes 'room without hunching.' Footprint inclusion is framed as savings."
+              }
+            ],
+            "what_changed": {
+              "from": "backcountry_hikers",
+              "to": "casual_car_camping",
+              "summary": "Casual variant translates every technical spec to an observable outcome. 'Near-vertical walls for livable volume' becomes 'room without hunching.' 'DAC Pressfit poles' disappears — casual buyers don't know or care about pole brands. 'Footprint included' gets a cost-saving frame."
+            }
+          },
+          "channel_variants": {
+            "pieces": [
+              {
+                "audience": "backcountry_hikers",
+                "channel": "product_page",
+                "copy": "9 lbs 4 oz. DAC Pressfit poles oversized for sustained wind load. 5000mm waterproof coating on recycled polyester fly. Near-vertical walls for livable volume. Two doors, two vestibules. Footprint included. This is not a backpacking tent. It is a basecamp for groups who set up, stay put, and run day missions from a fixed camp.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Technical, direct",
+                  "audience_adaptation": "Backcountry — assumed technical literacy, specs stated without translation"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "We respect the job you're doing and built gear that matches it."
+                },
+                "rationale": "Leads with weight as an honest statement, not a selling point. Explains what the tent is by first explaining what it isn't — backcountry audience respects that honesty."
+              },
+              {
+                "audience": "backcountry_hikers",
+                "channel": "email",
+                "copy": "The Basecamp 4P. Four-person shelter for fixed camps. 5000mm waterproof, DAC Pressfit poles, near-vertical walls. 9 lbs 4 oz with footprint. Not a backpacking tent — a tent that earns its weight by staying standing in conditions that matter.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Conversational, brief",
+                  "audience_adaptation": "Backcountry — assumed technical literacy"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "We respect the job you're doing and built gear that matches it."
+                },
+                "rationale": "Email condenses to key facts and the core positioning statement. Register shifts from spec-dense fragments to brief conversational sentences."
+              }
+            ],
+            "what_changed": [
+              {
+                "from": "product_page",
+                "to": "email",
+                "summary": "Email condenses to key facts and the core positioning statement. Register shifts from spec-dense fragments to brief conversational sentences."
+              }
+            ]
+          },
+          "campaign_package": {
+            "metadata": {
+              "suggested_timing": "Product page updated first. Segment-specific emails sent to backcountry list and casual list on the same day with different copy. No social for this brief — product education works better in longer formats.",
+              "content_hierarchy": "Two product pages (one per audience adaptation) are the anchors. Emails drive each segment to their respective page.",
+              "pillar_emphasis": "Built for the job — the weight and wall geometry exist because of the use case, not despite it."
+            },
+            "pieces": [
+              {
+                "audience": "backcountry_hikers",
+                "channel": "product_page",
+                "copy": "9 lbs 4 oz. DAC Pressfit poles oversized for sustained wind load. 5000mm waterproof coating on recycled polyester fly. Near-vertical walls for livable volume. Two doors, two vestibules. Footprint included. This is not a backpacking tent. It is a basecamp for groups who set up, stay put, and run day missions from a fixed camp.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Technical, direct",
+                  "audience_adaptation": "Backcountry — assumed technical literacy, specs stated without translation"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "We respect the job you're doing and built gear that matches it."
+                },
+                "rationale": "Leads with weight as an honest statement, not a selling point. Explains what the tent is by first explaining what it isn't — backcountry audience respects that honesty."
+              },
+              {
+                "audience": "casual_car_camping",
+                "channel": "product_page",
+                "copy": "Room for four adults and their gear without anyone hunching over. Two doors so nobody climbs over anybody at 2 AM. Handles heavy rain and sustained wind — 5000mm waterproof rating means serious waterproofing. Footprint included so you don't buy it separately. Sets up at camp and stays standing while you go do things.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Technical, direct — adjusted for casual audience",
+                  "audience_adaptation": "Casual — specs translated to observable outcomes, no jargon"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "This does what you need. Nothing extra."
+                },
+                "rationale": "Casual audience gets the same product facts translated to lived outcomes. '5000mm waterproof' is explained. 'Near-vertical walls' becomes 'room without hunching.' Footprint inclusion is framed as savings."
+              },
+              {
+                "audience": "backcountry_hikers",
+                "channel": "email",
+                "copy": "The Basecamp 4P. Four-person shelter for fixed camps. 5000mm waterproof, DAC Pressfit poles, near-vertical walls. 9 lbs 4 oz with footprint. Not a backpacking tent — a tent that earns its weight by staying standing in conditions that matter.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Conversational, brief",
+                  "audience_adaptation": "Backcountry — assumed technical literacy"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "We respect the job you're doing and built gear that matches it."
+                },
+                "rationale": "Email condenses to key facts and the core positioning statement. Register shifts from spec-dense fragments to brief conversational sentences."
+              },
+              {
+                "audience": "casual_car_camping",
+                "channel": "email",
+                "copy": "The Basecamp 4P. Room for four, two doors, handles weather you'd rather not be out in. Waterproof rating that actually means waterproof. Footprint included — no add-ons. Built for car camping trips where you want the tent to be the last thing you worry about.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Conversational, brief",
+                  "audience_adaptation": "Casual — specs translated to outcomes, plain language"
+                },
+                "pillar": {
+                  "id": "built_for_job",
+                  "headline": "Built for the job, not the brand.",
+                  "resonance": "This does what you need. Nothing extra."
+                },
+                "rationale": "Casual email translates waterproof rating to a trust statement. Footprint framed as 'no add-ons' — speaks to casual buyer's dislike of hidden costs."
+              }
+            ]
+          }
+        },
+        "slab_acquisition": {
+          "single": {
+            "audience": "casual_car_camping",
+            "channel": "social_media",
+            "copy": "Five days of ice. $285. No celebrity endorsement included.",
+            "rules_applied": {
+              "voice": ["plainspoken", "confident", "restrained", "dry"],
+              "channel_register": "Casual, dry",
+              "audience_adaptation": "Casual — outcome-focused, no jargon"
+            },
+            "pillar": {
+              "id": "pay_for_gear",
+              "headline": "Pay for the gear, not the logo.",
+              "resonance": "Same quality as the big names. No brand tax."
+            },
+            "rationale": "Social for acquisition leads with the two facts that matter to this audience: performance and price. The celebrity jab is peak Yowie dry humor — competitive positioning without naming competitors."
+          },
+          "segment_variants": {
+            "note": "This brief targets one audience segment (casual car camping). The Slab 35QT is a cooler-market acquisition product — the audience is unified. Segment variants would apply if this product also targeted backcountry buyers, but coolers serve a single audience in Yowie's catalog.",
+            "pieces": [
+              {
+                "audience": "casual_car_camping",
+                "channel": "social_media",
+                "copy": "Five days of ice. $285. No celebrity endorsement included.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Casual, dry",
+                  "audience_adaptation": "Casual — outcome-focused, no jargon"
+                },
+                "pillar": {
+                  "id": "pay_for_gear",
+                  "headline": "Pay for the gear, not the logo.",
+                  "resonance": "Same quality as the big names. No brand tax."
+                },
+                "rationale": "Social for acquisition leads with the two facts that matter to this audience: performance and price. The celebrity jab is peak Yowie dry humor — competitive positioning without naming competitors."
+              }
+            ]
+          },
+          "channel_variants": {
+            "pieces": [
+              {
+                "audience": "casual_car_camping",
+                "channel": "social_media",
+                "copy": "Five days of ice. $285. No celebrity endorsement included.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Casual, dry",
+                  "audience_adaptation": "Casual — outcome-focused, no jargon"
+                },
+                "pillar": {
+                  "id": "pay_for_gear",
+                  "headline": "Pay for the gear, not the logo.",
+                  "resonance": "Same quality as the big names. No brand tax."
+                },
+                "rationale": "Social for acquisition leads with the two facts that matter to this audience: performance and price. The celebrity jab is peak Yowie dry humor — competitive positioning without naming competitors."
+              },
+              {
+                "audience": "casual_car_camping",
+                "channel": "email",
+                "copy": "The Slab 35QT. Rotomolded — one piece, no seams, nothing to crack. 3 inches of commercial-grade insulation. Five-day ice retention in 90-degree heat. Bear-resistant certified. $285. The coolers that cost $100 more are paying for a logo. This one pays for insulation.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Conversational, brief",
+                  "audience_adaptation": "Casual — specs translated to outcomes"
+                },
+                "pillar": {
+                  "id": "pay_for_gear",
+                  "headline": "Pay for the gear, not the logo.",
+                  "resonance": "Same quality as the big names. No brand tax."
+                },
+                "rationale": "Email expands from one-liner to benefit stack. Same casual register, but now there's room to build the value argument. 'Pay for the gear' pillar gets explicit with the logo-vs-insulation comparison."
+              },
+              {
+                "audience": "casual_car_camping",
+                "channel": "landing_page",
+                "copy": "The Slab 35QT keeps ice for five days in 90-degree heat. That is not a marketing claim — it is a measured result. Rotomolded polyethylene, one piece, no seams to fail. 3 inches of commercial-grade insulation. Bear-resistant certified. Marine-grade stainless steel hardware. You can stand on it, sit on it, drag it across a parking lot. 35 quarts — 24 cans plus ice. $285. Compare that to the $400 coolers with the lifestyle branding. Same construction method. Same insulation class. Different price, because we skipped the logo.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Technical, direct — adjusted for casual audience",
+                  "audience_adaptation": "Casual — full pitch, specs as outcomes, competitive positioning"
+                },
+                "pillar": {
+                  "id": "pay_for_gear",
+                  "headline": "Pay for the gear, not the logo.",
+                  "resonance": "Same quality as the big names. No brand tax."
+                },
+                "rationale": "Landing page is the full pitch — every proof point deployed. Opens with the headline claim, immediately backs it with 'measured result.' Builds construction story, then drops the competitive comparison. This is the page social and email drive traffic to."
+              }
+            ],
+            "what_changed": [
+              {
+                "from": "social_media",
+                "to": "email",
+                "summary": "Email expands from one-liner to benefit stack. Same casual register, but now there's room to build the value argument. 'Pay for the gear' pillar gets explicit with the logo-vs-insulation comparison."
+              },
+              {
+                "from": "email",
+                "to": "landing_page",
+                "summary": "Landing page is the full pitch — every proof point deployed. Opens with the headline claim, immediately backs it with 'measured result.' Builds construction story, then drops the competitive comparison. This is the page social and email drive traffic to."
+              }
+            ]
+          },
+          "campaign_package": {
+            "metadata": {
+              "suggested_timing": "Landing page goes live as destination. Social ads run first for awareness — short, punchy, price-forward. Email follows for subscribers who clicked but didn't buy. Sequence: social (day 1) → email (day 3) → retarget social (day 7).",
+              "content_hierarchy": "Social is the hook. Email is the pitch. Landing page is the close. Each step adds detail — social is one line, email is a paragraph, landing page is the full argument.",
+              "pillar_emphasis": "Pay for the gear, not the logo — the competitive positioning against premium cooler brands drives every piece."
+            },
+            "pieces": [
+              {
+                "audience": "casual_car_camping",
+                "channel": "social_media",
+                "copy": "Five days of ice. $285. No celebrity endorsement included.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Casual, dry",
+                  "audience_adaptation": "Casual — outcome-focused, no jargon"
+                },
+                "pillar": {
+                  "id": "pay_for_gear",
+                  "headline": "Pay for the gear, not the logo.",
+                  "resonance": "Same quality as the big names. No brand tax."
+                },
+                "rationale": "Social for acquisition leads with the two facts that matter to this audience: performance and price. The celebrity jab is peak Yowie dry humor — competitive positioning without naming competitors."
+              },
+              {
+                "audience": "casual_car_camping",
+                "channel": "email",
+                "copy": "The Slab 35QT. Rotomolded — one piece, no seams, nothing to crack. 3 inches of commercial-grade insulation. Five-day ice retention in 90-degree heat. Bear-resistant certified. $285. The coolers that cost $100 more are paying for a logo. This one pays for insulation.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Conversational, brief",
+                  "audience_adaptation": "Casual — specs translated to outcomes"
+                },
+                "pillar": {
+                  "id": "pay_for_gear",
+                  "headline": "Pay for the gear, not the logo.",
+                  "resonance": "Same quality as the big names. No brand tax."
+                },
+                "rationale": "Email expands from one-liner to benefit stack. Same casual register, but now there's room to build the value argument. 'Pay for the gear' pillar gets explicit with the logo-vs-insulation comparison."
+              },
+              {
+                "audience": "casual_car_camping",
+                "channel": "landing_page",
+                "copy": "The Slab 35QT keeps ice for five days in 90-degree heat. That is not a marketing claim — it is a measured result. Rotomolded polyethylene, one piece, no seams to fail. 3 inches of commercial-grade insulation. Bear-resistant certified. Marine-grade stainless steel hardware. You can stand on it, sit on it, drag it across a parking lot. 35 quarts — 24 cans plus ice. $285. Compare that to the $400 coolers with the lifestyle branding. Same construction method. Same insulation class. Different price, because we skipped the logo.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Technical, direct — adjusted for casual audience",
+                  "audience_adaptation": "Casual — full pitch, specs as outcomes, competitive positioning"
+                },
+                "pillar": {
+                  "id": "pay_for_gear",
+                  "headline": "Pay for the gear, not the logo.",
+                  "resonance": "Same quality as the big names. No brand tax."
+                },
+                "rationale": "Landing page is the full pitch — every proof point deployed. Opens with the headline claim, immediately backs it with 'measured result.' Builds construction story, then drops the competitive comparison. This is the page social and email drive traffic to."
+              }
+            ]
+          }
+        },
+        "burrow_seasonal": {
+          "single": {
+            "audience": "cold_weather",
+            "channel": "email",
+            "copy": "The Burrow 0°F. 800-fill goose down. Trapezoidal baffles. Comfort-rated to 0°F, lower limit -15°F. DWR-coated recycled shell. Winter doesn't care if you're cold. This bag does. Full specs and temperature data on the site.",
+            "rules_applied": {
+              "voice": ["plainspoken", "confident", "restrained", "dry"],
+              "channel_register": "Conversational, brief",
+              "audience_adaptation": "Backcountry — cold-weather specialists, spec-dense even in email"
+            },
+            "pillar": {
+              "id": "quality_you_verify",
+              "headline": "Quality you verify, not quality we claim.",
+              "resonance": "Dig into the specs. The more you research, the more you'll find to like."
+            },
+            "rationale": "Email to cold-weather specialists leads with the specs they care about most — fill power, baffle construction, temperature ratings. The primary message line lands after the spec stack. Register is conversational but spec-dense because this audience reads specs like sentences."
+          },
+          "segment_variants": {
+            "pieces": [
+              {
+                "audience": "cold_weather",
+                "channel": "email",
+                "copy": "The Burrow 0°F. 800-fill goose down. Trapezoidal baffles. Comfort-rated to 0°F, lower limit -15°F. DWR-coated recycled shell. Winter doesn't care if you're cold. This bag does. Full specs and temperature data on the site.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Conversational, brief",
+                  "audience_adaptation": "Backcountry — cold-weather specialists, spec-dense even in email"
+                },
+                "pillar": {
+                  "id": "quality_you_verify",
+                  "headline": "Quality you verify, not quality we claim.",
+                  "resonance": "Dig into the specs. The more you research, the more you'll find to like."
+                },
+                "rationale": "Email to cold-weather specialists leads with the specs they care about most — fill power, baffle construction, temperature ratings. The primary message line lands after the spec stack. Register is conversational but spec-dense because this audience reads specs like sentences."
+              },
+              {
+                "audience": "backcountry_hikers",
+                "channel": "email",
+                "copy": "The Burrow 0°F. 800-fill goose down, trapezoidal baffles, DWR-coated shell. Comfort-rated to 0°F. 3 lbs 6 oz. If your shoulder-season trips are pushing into real cold, this is the bag that handles it. Specs and field data on the site.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Conversational, brief",
+                  "audience_adaptation": "Backcountry — general backcountry audience, weight included"
+                },
+                "pillar": {
+                  "id": "quality_you_verify",
+                  "headline": "Quality you verify, not quality we claim.",
+                  "resonance": "Dig into the specs. The more you research, the more you'll find to like."
+                },
+                "rationale": "Backcountry variant keeps full specs but shifts framing from 'winter camping' to 'shoulder-season trips pushing cold.' Weight is included (matters to backcountry audience), lower limit rating is dropped (less relevant for shoulder-season use). Closing is practical — 'handles it' — rather than the more pointed seasonal message."
+              }
+            ],
+            "what_changed": {
+              "from": "cold_weather",
+              "to": "backcountry_hikers",
+              "summary": "Backcountry variant keeps full specs but shifts framing from 'winter camping' to 'shoulder-season trips pushing cold.' Weight is included (matters to backcountry audience), lower limit rating is dropped (less relevant for shoulder-season use). Closing is practical rather than seasonal."
+            }
+          },
+          "channel_variants": {
+            "pieces": [
+              {
+                "audience": "cold_weather",
+                "channel": "email",
+                "copy": "The Burrow 0°F. 800-fill goose down. Trapezoidal baffles. Comfort-rated to 0°F, lower limit -15°F. DWR-coated recycled shell. Winter doesn't care if you're cold. This bag does. Full specs and temperature data on the site.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Conversational, brief",
+                  "audience_adaptation": "Backcountry — cold-weather specialists, spec-dense even in email"
+                },
+                "pillar": {
+                  "id": "quality_you_verify",
+                  "headline": "Quality you verify, not quality we claim.",
+                  "resonance": "Dig into the specs. The more you research, the more you'll find to like."
+                },
+                "rationale": "Email to cold-weather specialists leads with the specs they care about most — fill power, baffle construction, temperature ratings. The primary message line lands after the spec stack. Register is conversational but spec-dense because this audience reads specs like sentences."
+              },
+              {
+                "audience": "cold_weather",
+                "channel": "social_media",
+                "copy": "0°F comfort rating. 800-fill goose down. Trapezoidal baffles. Winter doesn't care if you're cold. The Burrow does.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Casual, dry",
+                  "audience_adaptation": "Backcountry — cold-weather specialists"
+                },
+                "pillar": {
+                  "id": "quality_you_verify",
+                  "headline": "Quality you verify, not quality we claim.",
+                  "resonance": "Dig into the specs. The more you research, the more you'll find to like."
+                },
+                "rationale": "Social strips to the spec stack and the campaign line. No CTA, no explanation. The specs are the argument. The tagline is the closer."
+              },
+              {
+                "audience": "cold_weather",
+                "channel": "product_page",
+                "copy": "800-fill responsibly sourced goose down. Trapezoidal baffles to eliminate cold spots. Comfort-rated to 0°F, lower limit -15°F. DWR-coated 20D recycled polyester shell sheds moisture before it reaches the down. Full-length insulated draft tube. 3 lbs 6 oz. Built for people who camp when the temperature drops below the point where most people stop camping.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Technical, direct",
+                  "audience_adaptation": "Backcountry — cold-weather specialists, maximum spec detail"
+                },
+                "pillar": {
+                  "id": "quality_you_verify",
+                  "headline": "Quality you verify, not quality we claim.",
+                  "resonance": "Dig into the specs. The more you research, the more you'll find to like."
+                },
+                "rationale": "Product page adds specs that email omitted — DWR function explanation, draft tube, weight. Register shifts from conversational to technical fragments. The closing line defines the buyer rather than pitching to them."
+              }
+            ],
+            "what_changed": [
+              {
+                "from": "email",
+                "to": "social_media",
+                "summary": "Social strips to the spec stack and the campaign line. No CTA, no explanation. The specs are the argument. The tagline is the closer."
+              },
+              {
+                "from": "social_media",
+                "to": "product_page",
+                "summary": "Product page adds specs that email omitted — DWR function explanation, draft tube, weight. Register shifts from conversational to technical fragments. The closing line defines the buyer rather than pitching to them."
+              }
+            ]
+          },
+          "campaign_package": {
+            "metadata": {
+              "suggested_timing": "Product page updated with seasonal framing by early October. Email to cold-weather and backcountry segments in mid-October as temperatures drop. Social posts through October and November — one spec angle per post, campaign line as recurring anchor.",
+              "content_hierarchy": "Product page is the reference. Email is the nudge — seasonal urgency without being pushy. Social repeats the campaign line across multiple posts with different spec leads.",
+              "pillar_emphasis": "Quality you verify — the specs are the pitch. Temperature ratings, fill power, and baffle construction are verifiable claims that this audience will check."
+            },
+            "pieces": [
+              {
+                "audience": "cold_weather",
+                "channel": "email",
+                "copy": "The Burrow 0°F. 800-fill goose down. Trapezoidal baffles. Comfort-rated to 0°F, lower limit -15°F. DWR-coated recycled shell. Winter doesn't care if you're cold. This bag does. Full specs and temperature data on the site.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Conversational, brief",
+                  "audience_adaptation": "Backcountry — cold-weather specialists, spec-dense even in email"
+                },
+                "pillar": {
+                  "id": "quality_you_verify",
+                  "headline": "Quality you verify, not quality we claim.",
+                  "resonance": "Dig into the specs. The more you research, the more you'll find to like."
+                },
+                "rationale": "Email to cold-weather specialists leads with the specs they care about most — fill power, baffle construction, temperature ratings. The primary message line lands after the spec stack. Register is conversational but spec-dense because this audience reads specs like sentences."
+              },
+              {
+                "audience": "backcountry_hikers",
+                "channel": "email",
+                "copy": "The Burrow 0°F. 800-fill goose down, trapezoidal baffles, DWR-coated shell. Comfort-rated to 0°F. 3 lbs 6 oz. If your shoulder-season trips are pushing into real cold, this is the bag that handles it. Specs and field data on the site.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Conversational, brief",
+                  "audience_adaptation": "Backcountry — general backcountry audience, weight included"
+                },
+                "pillar": {
+                  "id": "quality_you_verify",
+                  "headline": "Quality you verify, not quality we claim.",
+                  "resonance": "Dig into the specs. The more you research, the more you'll find to like."
+                },
+                "rationale": "Backcountry variant keeps full specs but shifts framing from 'winter camping' to 'shoulder-season trips pushing cold.' Weight is included (matters to backcountry audience), lower limit rating is dropped (less relevant for shoulder-season use). Closing is practical — 'handles it' — rather than the more pointed seasonal message."
+              },
+              {
+                "audience": "cold_weather",
+                "channel": "social_media",
+                "copy": "0°F comfort rating. 800-fill goose down. Trapezoidal baffles. Winter doesn't care if you're cold. The Burrow does.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Casual, dry",
+                  "audience_adaptation": "Backcountry — cold-weather specialists"
+                },
+                "pillar": {
+                  "id": "quality_you_verify",
+                  "headline": "Quality you verify, not quality we claim.",
+                  "resonance": "Dig into the specs. The more you research, the more you'll find to like."
+                },
+                "rationale": "Social strips to the spec stack and the campaign line. No CTA, no explanation. The specs are the argument. The tagline is the closer."
+              },
+              {
+                "audience": "cold_weather",
+                "channel": "product_page",
+                "copy": "800-fill responsibly sourced goose down. Trapezoidal baffles to eliminate cold spots. Comfort-rated to 0°F, lower limit -15°F. DWR-coated 20D recycled polyester shell sheds moisture before it reaches the down. Full-length insulated draft tube. 3 lbs 6 oz. Built for people who camp when the temperature drops below the point where most people stop camping.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Technical, direct",
+                  "audience_adaptation": "Backcountry — cold-weather specialists, maximum spec detail"
+                },
+                "pillar": {
+                  "id": "quality_you_verify",
+                  "headline": "Quality you verify, not quality we claim.",
+                  "resonance": "Dig into the specs. The more you research, the more you'll find to like."
+                },
+                "rationale": "Product page adds specs that email omitted — DWR function explanation, draft tube, weight. Register shifts from conversational to technical fragments. The closing line defines the buyer rather than pitching to them."
+              },
+              {
+                "audience": "backcountry_hikers",
+                "channel": "social_media",
+                "copy": "800-fill goose down. 0°F comfort rating. 3 lbs 6 oz. The Burrow — for shoulder-season camps that stop being shoulder season overnight.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Casual, dry",
+                  "audience_adaptation": "Backcountry — general backcountry audience"
+                },
+                "pillar": {
+                  "id": "quality_you_verify",
+                  "headline": "Quality you verify, not quality we claim.",
+                  "resonance": "Dig into the specs. The more you research, the more you'll find to like."
+                },
+                "rationale": "Backcountry social includes weight (matters to this audience) and reframes the seasonal message for shoulder-season context rather than dedicated winter camping."
+              },
+              {
+                "audience": "backcountry_hikers",
+                "channel": "product_page",
+                "copy": "800-fill goose down. Trapezoidal baffles. Comfort-rated to 0°F, lower limit -15°F. DWR-coated 20D recycled polyester shell. 3 lbs 6 oz. The Burrow is a winter bag that earns its weight for shoulder-season trips where conditions shift. If you carry a 30°F bag and add layers to compensate, this replaces the bag and the layers.",
+                "rules_applied": {
+                  "voice": ["plainspoken", "confident", "restrained", "dry"],
+                  "channel_register": "Technical, direct",
+                  "audience_adaptation": "Backcountry — general backcountry audience, comparative positioning"
+                },
+                "pillar": {
+                  "id": "quality_you_verify",
+                  "headline": "Quality you verify, not quality we claim.",
+                  "resonance": "Dig into the specs. The more you research, the more you'll find to like."
+                },
+                "rationale": "Backcountry product page positions the Burrow as a replacement for the layering workaround. Practical comparison to 30°F bags speaks to experienced buyers who know the compromise."
+              }
+            ]
+          }
+        }
+      }
+    };
+    // JS added later
+  </script>
+</body>
+</html>
