@@ -313,5 +313,95 @@
       "voice_adaptation": "backcountry",
       "profile": "Conditions-driven buyers. Most spec-literate segment. Trust independent lab testing. Will pay premium if specs justify it."
     }
+  },
+  "examples": {
+    "basecamp_45l|backcountry_hikers|product_page": {
+      "copy": "500D Cordura body with reinforced bottom panel. Framesheet and aluminum stays rated to 45 lbs. Rolltop closure. Four attachment points. 4 lbs 2 oz. This is not an ultralight pack. It's a pack that carries real weight over real terrain without falling apart.",
+      "rules_demonstrated": ["Technical register — specs stated as facts", "Confident — no hedging", "Restrained — no superlatives", "Honest trade-off acknowledgment (weight vs. durability)"]
+    },
+    "basecamp_45l|backcountry_hikers|email": {
+      "copy": "The Basecamp 45L. Same pack, updated hip belt geometry. 500D Cordura. Rated to 45 lbs. If your current pack is showing wear, this is the replacement that won't.",
+      "rules_demonstrated": ["Conversational, brief register", "Specs included but not exhaustive", "Confident closing statement"]
+    },
+    "basecamp_45l|backcountry_hikers|social_media": {
+      "copy": "45 liters. 45-pound load rating. 500D Cordura. The math is simple.",
+      "rules_demonstrated": ["Casual, dry register", "Dry humor — 'the math is simple'", "Spec-forward even on social"]
+    },
+    "basecamp_45l|thru_hikers|product_page": {
+      "copy": "4 lbs 2 oz is not light. But 2,000 miles from now, the zippers still work and the fabric isn't shredding. The Basecamp trades ounces for longevity. If you've replaced a pack mid-trail, you know why.",
+      "rules_demonstrated": ["Backcountry adaptation — speaks peer-to-peer", "Honest trade-off (weight vs. durability)", "Confident — no apologizing for the weight"]
+    },
+    "ridgeline_22l|backcountry_hikers|product_page": {
+      "copy": "210D ripstop body, 500D Cordura base. 1 lb 6 oz. Light where it can be, reinforced where it contacts rock. Summit pushes, day hikes, side trips from basecamp.",
+      "rules_demonstrated": ["Technical register", "Design philosophy stated directly — light where possible, tough where necessary"]
+    },
+    "ridgeline_22l|thru_hikers|social_media": {
+      "copy": "Leave the Basecamp at camp. Grab the Ridgeline. 1 lb 6 oz, Cordura base. Go get the summit and come back.",
+      "rules_demonstrated": ["Casual register", "Cross-product reference", "Action-oriented, no fluff"]
+    },
+    "lowline_2p|backcountry_hikers|product_page": {
+      "copy": "40-inch peak height. Wide footprint. Two vestibules. Built low and tight because ridgeline wind doesn't care about your headroom. 3000mm waterproof coating, DAC Featherlite poles, sealed seams. 4 lbs 8 oz packed.",
+      "rules_demonstrated": ["Technical register", "Design rationale stated plainly — why it's low", "Specs as facts"]
+    },
+    "lowline_2p|cold_weather|email": {
+      "copy": "The Lowline 2P. Low-profile, wind-resistant, two vestibules for gear. 3000mm coating, sealed seams, DAC poles. If you're camping above treeline, this is the tent that stays standing.",
+      "rules_demonstrated": ["Conversational register", "Cold-weather audience — assumes knowledge of conditions", "Confident closing"]
+    },
+    "basecamp_4p|backcountry_hikers|product_page": {
+      "copy": "9 lbs 4 oz. Not a backpacking tent. A basecamp tent for groups who set up and stay put. 5000mm waterproof coating, DAC Pressfit poles oversized for wind load. Near-vertical walls because four adults and their gear need room. Two doors. Two vestibules. Footprint included.",
+      "rules_demonstrated": ["Technical register", "Honest about what it isn't (not a backpacking tent)", "Design rationale for weight and wall geometry"]
+    },
+    "basecamp_4p|casual_car_camping|product_page": {
+      "copy": "Room for four adults and their gear. Walls that stand up straight so you're not hunched over. Two doors so nobody climbs over anybody. Handles heavy rain and sustained wind. 5000mm waterproof rating — that's serious waterproofing. Footprint included.",
+      "rules_demonstrated": ["Casual adaptation — translates specs to outcomes", "Explains waterproof rating without assuming knowledge", "Same confident voice, different assumed knowledge"]
+    },
+    "dirtbag_30f|backcountry_hikers|product_page": {
+      "copy": "650-fill duck down. 20D recycled polyester shell. Comfort-rated to 30°F, lower limit 19°F. Mummy cut with draft collar. 2 lbs 4 oz. Named for the people who use it — the ones who'd rather be dirty and outside than clean and home.",
+      "rules_demonstrated": ["Technical register", "Dry humor — the name explanation", "Specs stated as facts with no embellishment"]
+    },
+    "dirtbag_30f|backcountry_hikers|social_media": {
+      "copy": "The Dirtbag. Named after its target market. 650-fill down, 30°F comfort rating, 2 lbs 4 oz. You know who you are.",
+      "rules_demonstrated": ["Casual, dry register", "Dry humor — self-aware naming", "Backcountry audience — specs without explanation"]
+    },
+    "dirtbag_30f|thru_hikers|email": {
+      "copy": "Three-season bag. 650-fill down. 2 lbs 4 oz packed. Comfort-rated to 30°F. Spring through fall without carrying winter weight. The Dirtbag — it packs small and lasts longer than the cheap one you're about to replace.",
+      "rules_demonstrated": ["Conversational register", "Thru-hiker focus — weight and packability", "Confident, honest comparison to competitors"]
+    },
+    "burrow_0f|cold_weather|product_page": {
+      "copy": "800-fill goose down. Trapezoidal baffles. Comfort-rated to 0°F, lower limit -15°F. DWR-coated 20D recycled shell. Full-length insulated draft tube. 3 lbs 6 oz. This bag is for people who camp when the temperature drops below the point where most people stop camping.",
+      "rules_demonstrated": ["Technical register", "Cold-weather audience — maximum spec detail", "Confident positioning — defines the buyer"]
+    },
+    "burrow_0f|backcountry_hikers|social_media": {
+      "copy": "0°F comfort rating. 800-fill goose down. Trapezoidal baffles. Winter doesn't care if you're cold. The Burrow does.",
+      "rules_demonstrated": ["Casual, dry register", "Dry tone — 'winter doesn't care'", "Spec-forward"]
+    },
+    "burrow_0f|cold_weather|email": {
+      "copy": "The Burrow 0°F. 800-fill goose down. Comfort-rated to 0°F, lower limit -15°F. Trapezoidal baffles, insulated draft tube, DWR-coated shell. If you're sleeping outside below freezing, this is the bag.",
+      "rules_demonstrated": ["Conversational, brief register", "Cold-weather audience — full spec detail in email", "Confident closer"]
+    },
+    "slab_35qt|casual_car_camping|product_page": {
+      "copy": "Keeps ice for five days in 90-degree heat. Rotomolded — one piece, no seams, nothing to crack or leak. 3 inches of commercial-grade insulation. You can stand on it. You can drag it across gravel. Bear-resistant certified. 35 quarts, 24 cans plus ice. Competes with coolers that cost $100 more because those coolers are paying for a logo.",
+      "rules_demonstrated": ["Casual adaptation — specs translated to outcomes", "Confident competitive positioning", "'Pay for the gear' pillar in action", "Plain English throughout"]
+    },
+    "slab_35qt|casual_car_camping|email": {
+      "copy": "The Slab 35QT. Five-day ice retention. Rotomolded, bear-resistant, built to get dragged around. Same quality as the $400 coolers. Less money. No logo tax.",
+      "rules_demonstrated": ["Conversational, brief register", "Casual audience — outcome-focused", "'Pay for the gear' messaging"]
+    },
+    "slab_35qt|casual_car_camping|social_media": {
+      "copy": "Five days of ice. $285. No celebrity endorsement included.",
+      "rules_demonstrated": ["Casual, dry register", "Dry humor — the celebrity jab", "'Pay for the gear' pillar", "Maximum brevity"]
+    },
+    "slab_35qt|casual_car_camping|customer_service": {
+      "copy": "That latch shouldn't be sticking after two months. Send us a photo and your order number — we'll ship a replacement cooler, not just the part. You'll have it in 3-4 business days.",
+      "rules_demonstrated": ["Helpful, no-nonsense register", "Immediate acknowledgment", "Solution in first reply", "Replacement over repair"]
+    },
+    "foldout|casual_car_camping|product_page": {
+      "copy": "Folds flat to 3 inches. Stands up when loaded. Welded liner — no leaks, not now, not after a year of use. Closed-cell foam keeps ice for 24 hours. Magnetic closure, shoulder strap, zip pocket for your keys. 3 lbs 2 oz. For day trips, groceries, and anywhere a hard cooler is more than you need.",
+      "rules_demonstrated": ["Casual adaptation — outcomes and use cases", "Durability claim with time frame", "Plain language throughout"]
+    },
+    "foldout|casual_car_camping|social_media": {
+      "copy": "A soft cooler that isn't disposable. 24-hour ice retention. Folds flat. $145.",
+      "rules_demonstrated": ["Casual, dry register", "Competitive dig without naming competitors", "Price as a feature"]
+    }
   }
 }
