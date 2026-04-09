@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yowie Marketing Ecosystem — Architecture Map</title>
+  <style>
+    :root {
+      --bg-primary: #0a0a1a;
+      --bg-secondary: #12122a;
+      --bg-selector: #16213e;
+      --text-primary: #ccd6f6;
+      --text-secondary: #8892b0;
+      --accent-gold: #e2c87d;
+      --accent-teal: #64ffda;
+      --accent-red: #ff6b6b;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body, h1, h2, h3, h4, p { margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 48px 24px 16px;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent-gold);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    header p {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      margin-top: 6px;
+      max-width: 600px;
+    }
+
+    /* Pipeline container */
+    .pipeline-container {
+      width: 100%;
+      max-width: 1100px;
+      padding: 32px 24px 64px;
+    }
+
+    /* Pipeline row */
+    .pipeline-row {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin-bottom: 32px;
+    }
+
+    /* Arrow connectors */
+    .arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      font-size: 1.4rem;
+      padding: 0 4px;
+      flex-shrink: 0;
+    }
+
+    /* Node base */
+    .node {
+      flex: 1;
+      border-radius: 10px;
+      padding: 20px;
+      position: relative;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* AI nodes */
+    .node.ai {
+      background: rgba(100,255,218,0.05);
+      border: 1px solid rgba(100,255,218,0.2);
+    }
+    .node.ai:hover {
+      background: rgba(100,255,218,0.1);
+      border-color: rgba(100,255,218,0.4);
+    }
+
+    /* Human decision nodes */
+    .node.human {
+      background: rgba(226,200,125,0.07);
+      border: 2px solid rgba(226,200,125,0.35);
+    }
+    .node.human:hover {
+      background: rgba(226,200,125,0.12);
+      border-color: rgba(226,200,125,0.5);
+    }
+
+    /* Foundation node */
+    .node.foundation {
+      background: rgba(100,255,218,0.03);
+      border: 1px dashed rgba(100,255,218,0.15);
+    }
+
+    /* Delivery node */
+    .node.delivery {
+      background: rgba(100,255,218,0.05);
+      border: 1px solid rgba(100,255,218,0.2);
+    }
+
+    /* Node internals */
+    .node-type {
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .node.ai .node-type { color: var(--accent-teal); }
+    .node.human .node-type { color: var(--accent-gold); }
+    .node.foundation .node-type { color: var(--accent-teal); opacity: 0.7; }
+    .node.delivery .node-type { color: var(--accent-teal); }
+
+    .node-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .node-desc {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .node-tool {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .node-tool a {
+      font-size: 0.7rem;
+      color: var(--accent-teal);
+      text-decoration: none;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+    .node-tool a:hover {
+      text-decoration: underline;
+    }
+    .node-tool span {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    /* Human gate icon */
+    .gate-icon {
+      font-size: 0.85rem;
+      margin-right: 4px;
+    }
+
+    /* Checklist inside human nodes */
+    .node-checklist {
+      list-style: none;
+      padding: 0;
+      margin-top: 10px;
+    }
+    .node-checklist li {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      padding: 3px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      line-height: 1.3;
+    }
+    .check-box {
+      width: 12px;
+      height: 12px;
+      border: 1px solid rgba(226,200,125,0.4);
+      border-radius: 2px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Delivery destinations */
+    .dest-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .dest-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+    .dest-icon {
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      width: 22px;
+      text-align: center;
+    }
+    .dest-label {
+      font-size: 0.72rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* Foundation row */
+    .foundation-row {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin-bottom: 24px;
+    }
+    .foundation-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 12px;
+      flex-shrink: 0;
+    }
+    .connector-line {
+      width: 1px;
+      height: 32px;
+      background: rgba(100,255,218,0.15);
+    }
+    .connector-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(100,255,218,0.3);
+    }
+
+    /* Section labels */
+    .section-label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      padding-left: 4px;
+    }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-top: 8px;
+      padding: 16px;
+      border-top: 1px solid var(--border);
+      max-width: 1100px;
+      width: 100%;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+    }
+    .legend-swatch {
+      width: 20px;
+      height: 12px;
+      border-radius: 3px;
+    }
+    .legend-swatch.ai-swatch {
+      background: rgba(100,255,218,0.15);
+      border: 1px solid rgba(100,255,218,0.3);
+    }
+    .legend-swatch.human-swatch {
+      background: rgba(226,200,125,0.15);
+      border: 2px solid rgba(226,200,125,0.4);
+    }
+    .legend-swatch.foundation-swatch {
+      background: rgba(100,255,218,0.05);
+      border: 1px dashed rgba(100,255,218,0.2);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 16px 24px 32px;
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      max-width: 1100px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .pipeline-row { flex-direction: column; }
+      .arrow { transform: rotate(90deg); padding: 8px 0; }
+      .dest-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Yowie Marketing Ecosystem</h1>
+    <p>The complete pipeline from research through to delivery. AI produces drafts at every stage. Humans make decisions at every gate.</p>
+  </header>
+
+  <div class="pipeline-container">
+
+    <!-- Foundation layer -->
+    <div class="section-label">Foundation</div>
+    <div class="foundation-row">
+      <div class="node foundation" style="max-width: 420px;">
+        <div class="node-type">Data Layer</div>
+        <div class="node-title">Brand Configuration</div>
+        <div class="node-desc">Voice rules, channel registers, audience adaptations, messaging pillars, terminology, product catalog. The single source of truth that governs all content decisions across the ecosystem.</div>
+        <div class="node-tool">
+          <a href="brand_config_viewer.html">Open Brand Config Viewer →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connector from foundation to pipeline -->
+    <div class="foundation-connector">
+      <div class="connector-dot"></div>
+      <div class="connector-line"></div>
+      <div style="font-size: 0.6rem; color: var(--text-secondary); letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 0;">feeds</div>
+      <div class="connector-line"></div>
+      <div class="connector-dot"></div>
+    </div>
+
+    <!-- Main pipeline -->
+    <div class="section-label">Pipeline</div>
+    <div class="pipeline-row">
+
+      <!-- Node 1: Brief Builder -->
+      <div class="node ai">
+        <div class="node-type">AI Tool</div>
+        <div class="node-title">Research & Brief Builder</div>
+        <div class="node-desc">Takes raw inputs (product specs, competitive landscape, audience profile, campaign objective) and produces structured campaign briefs. Includes competitive analysis, audience research, reasoning chains, and positioning angles.</div>
+        <div class="node-tool">
+          <a href="brief_builder.html">Open Brief Builder →</a>
+        </div>
+      </div>
+
+      <div class="arrow">→</div>
+
+      <!-- Node 2: Brief Approval (Human) -->
+      <div class="node human">
+        <div class="node-type"><span class="gate-icon">⚑</span> Human Decision Gate</div>
+        <div class="node-title">Brief Review & Approval</div>
+        <div class="node-desc">Marketing lead reviews the AI-generated brief before it enters the content pipeline.</div>
+        <ul class="node-checklist">
+          <li><span class="check-box"></span>Primary message matches positioning angle</li>
+          <li><span class="check-box"></span>Proof points are verifiable and specific</li>
+          <li><span class="check-box"></span>Channel mix fits audience media habits</li>
+          <li><span class="check-box"></span>CTA matches campaign objective</li>
+          <li><span class="check-box"></span>Tone overrides applied if needed</li>
+        </ul>
+      </div>
+
+      <div class="arrow">→</div>
+
+      <!-- Node 3: Content Engine -->
+      <div class="node ai">
+        <div class="node-type">AI Tool</div>
+        <div class="node-title">Content Engine</div>
+        <div class="node-desc">Reads the approved brief and the Brand Configuration Layer. Produces on-brand, segment-specific, channel-ready content across four output modes: single item, segment variants, channel variants, and full campaign packages.</div>
+        <div class="node-tool">
+          <a href="content_engine.html">Open Content Engine →</a>
+        </div>
+      </div>
+
+      <div class="arrow">→</div>
+
+      <!-- Node 4: Content Review (Human) -->
+      <div class="node human">
+        <div class="node-type"><span class="gate-icon">⚑</span> Human Decision Gate</div>
+        <div class="node-title">Content Review & Approval</div>
+        <div class="node-desc">Content lead reviews AI-generated copy before distribution. Checks voice compliance, factual accuracy, and brand alignment.</div>
+        <ul class="node-checklist">
+          <li><span class="check-box"></span>Copy follows brand voice rules</li>
+          <li><span class="check-box"></span>No forbidden terminology</li>
+          <li><span class="check-box"></span>Specs and claims are accurate</li>
+          <li><span class="check-box"></span>Channel register is appropriate</li>
+          <li><span class="check-box"></span>Audience adaptation is correct</li>
+        </ul>
+      </div>
+
+      <div class="arrow">→</div>
+
+      <!-- Node 5: Publish & Distribute -->
+      <div class="node delivery">
+        <div class="node-type">Output</div>
+        <div class="node-title">Publish & Distribute</div>
+        <div class="node-desc">Approved content flows to its final destinations.</div>
+        <div class="dest-grid">
+          <div class="dest-item">
+            <span class="dest-icon">✉</span>
+            <span class="dest-label">Email Platform</span>
+          </div>
+          <div class="dest-item">
+            <span class="dest-icon">◎</span>
+            <span class="dest-label">Social Channels</span>
+          </div>
+          <div class="dest-item">
+            <span class="dest-icon">▦</span>
+            <span class="dest-label">CMS / Product Pages</span>
+          </div>
+          <div class="dest-item">
+            <span class="dest-icon">◲</span>
+            <span class="dest-label">Design Pipeline</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-swatch ai-swatch"></div>
+      AI-powered tool
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch human-swatch"></div>
+      Human decision gate
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch foundation-swatch"></div>
+      Data foundation
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Yowie Marketing Ecosystem built with Claude Code. Each AI tool reads from the Brand Configuration Layer. Every output passes through a human decision gate before moving downstream.</p>
+  </div>
+
+</body>
+</html>
