@@ -892,7 +892,10 @@
         if (aIdx === -1) aIdx = pillarKeys.length;
         return { key: key, rank: (pIdx + aIdx) / 2 };
       });
-      ranked.sort(function(a, b) { return a.rank - b.rank; });
+      ranked.sort(function(a, b) {
+        if (a.rank !== b.rank) return a.rank - b.rank;
+        return audienceEmphasis.indexOf(a.key) - audienceEmphasis.indexOf(b.key);
+      });
 
       var html = '<div class="card-label">Messaging Pillars</div>';
       html += '<p style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:10px;">' +
@@ -978,9 +981,10 @@
       var key = state.product + '|' + state.audience + '|' + state.channel;
       var example = CONFIG.examples[key];
       var container = document.getElementById('copy-content');
+      var html;
 
       if (example) {
-        var html = '<div class="copy-blockquote"><p>' + escapeHtml(example.copy) + '</p></div>';
+        html = '<div class="copy-blockquote"><p>' + escapeHtml(example.copy) + '</p></div>';
         html += '<ul class="rules-demonstrated">';
         example.rules_demonstrated.forEach(function(r) {
           html += '<li>' + escapeHtml(r) + '</li>';
@@ -990,7 +994,7 @@
       } else {
         var channel = CONFIG.voice.channels[state.channel];
         var adaptationMode = CONFIG.audiences[state.audience].voice_adaptation;
-        var html = '<div class="no-example">';
+        html = '<div class="no-example">';
         html += 'No example for this combination: <strong>' +
           escapeHtml(CONFIG.products[state.product].name) + '</strong> + <strong>' +
           escapeHtml(CONFIG.audiences[state.audience].name) + '</strong> + <strong>' +
