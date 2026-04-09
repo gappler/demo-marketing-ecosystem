@@ -173,5 +173,145 @@
         "incorrect": "Lightweight construction throughout the Basecamp 45L."
       }
     ]
+  },
+  "messaging": {
+    "pillars": {
+      "built_for_job": {
+        "headline": "Built for the job, not the brand.",
+        "description": "Every product is designed around its specific use case. No features for the spec sheet. No materials for the marketing copy.",
+        "resonance": {
+          "backcountry": "We respect the job you're doing and built gear that matches it.",
+          "casual": "This does what you need. Nothing extra."
+        }
+      },
+      "quality_you_verify": {
+        "headline": "Quality you verify, not quality we claim.",
+        "description": "Real specs, real materials data, real-world performance. The products hold up to scrutiny because they're built to hold up to scrutiny.",
+        "resonance": {
+          "backcountry": "Dig into the specs. The more you research, the more you'll find to like.",
+          "casual": "Check the reviews. Compare the build. We're not hiding anything."
+        }
+      },
+      "pay_for_gear": {
+        "headline": "Pay for the gear, not the logo.",
+        "description": "Minimal branding. No aspirational marketing. No sponsorship deals. The savings get reinvested into materials and construction.",
+        "resonance": {
+          "backcountry": "We respect your intelligence — you're paying for materials, not marketing.",
+          "casual": "Same quality as the big names. No brand tax."
+        }
+      },
+      "responsible_materials": {
+        "headline": "Responsible materials, zero grandstanding.",
+        "description": "Recycled fabrics, natural insulation, minimal packaging — because these choices make sense, not because they make good Instagram posts.",
+        "resonance": {
+          "backcountry": "Good materials happen to be responsible materials. That's the whole story.",
+          "casual": "We use recycled and natural materials where it makes sense. No lecture."
+        }
+      }
+    },
+    "product_emphasis": {
+      "backpacks": ["built_for_job", "quality_you_verify", "pay_for_gear", "responsible_materials"],
+      "tents": ["built_for_job", "quality_you_verify", "responsible_materials", "pay_for_gear"],
+      "sleeping_bags": ["quality_you_verify", "built_for_job", "responsible_materials", "pay_for_gear"],
+      "coolers": ["pay_for_gear", "built_for_job", "quality_you_verify", "responsible_materials"]
+    },
+    "audience_emphasis": {
+      "backcountry_hikers": ["built_for_job", "quality_you_verify", "pay_for_gear", "responsible_materials"],
+      "thru_hikers": ["quality_you_verify", "built_for_job", "pay_for_gear", "responsible_materials"],
+      "casual_car_camping": ["pay_for_gear", "built_for_job", "quality_you_verify", "responsible_materials"],
+      "cold_weather": ["quality_you_verify", "built_for_job", "responsible_materials", "pay_for_gear"]
+    }
+  },
+  "products": {
+    "basecamp_45l": {
+      "name": "Basecamp 45L",
+      "line": "backpacks",
+      "price": 385,
+      "description": "Multi-day backcountry hauler built for loads up to 45 pounds over rough, trailless terrain.",
+      "key_features": ["500D Cordura body", "Framesheet rated to 45 lbs", "Rolltop closure", "Recycled nylon shell", "4 lbs 2 oz"],
+      "audiences": ["backcountry_hikers", "thru_hikers"]
+    },
+    "ridgeline_22l": {
+      "name": "Ridgeline 22L",
+      "line": "backpacks",
+      "price": 185,
+      "description": "Stripped-down daypack for summit pushes, day hikes, and fast-and-light side trips.",
+      "key_features": ["210D ripstop nylon body", "500D Cordura base", "Removable hip belt", "Recycled nylon shell", "1 lb 6 oz"],
+      "audiences": ["backcountry_hikers", "thru_hikers"]
+    },
+    "lowline_2p": {
+      "name": "Lowline 2P",
+      "line": "tents",
+      "price": 475,
+      "description": "Two-person, three-season tent built low and tight for wind resistance.",
+      "key_features": ["3000mm waterproof coating", "DAC Featherlite poles", "40\" peak height", "Two vestibules", "Recycled polyester fly", "4 lbs 8 oz"],
+      "audiences": ["backcountry_hikers", "cold_weather"]
+    },
+    "basecamp_4p": {
+      "name": "Basecamp 4P",
+      "line": "tents",
+      "price": 695,
+      "description": "Four-person basecamp tent for multi-day trips in variable conditions.",
+      "key_features": ["5000mm waterproof coating", "DAC Pressfit poles", "Near-vertical walls", "Full-coverage fly", "Recycled polyester fly", "Footprint included", "9 lbs 4 oz"],
+      "audiences": ["backcountry_hikers", "casual_car_camping", "cold_weather"]
+    },
+    "dirtbag_30f": {
+      "name": "Dirtbag 30°F",
+      "line": "sleeping_bags",
+      "price": 295,
+      "description": "Three-season bag for campers who sleep out from spring through fall.",
+      "key_features": ["650-fill duck down", "20D recycled polyester shell", "Comfort rating: 30°F", "Lower limit: 19°F", "Mummy cut", "2 lbs 4 oz"],
+      "audiences": ["backcountry_hikers", "thru_hikers"]
+    },
+    "burrow_0f": {
+      "name": "Burrow 0°F",
+      "line": "sleeping_bags",
+      "price": 445,
+      "description": "Winter bag for cold-weather specialists. Comfort-rated to 0°F.",
+      "key_features": ["800-fill goose down", "20D recycled polyester shell with DWR", "Comfort rating: 0°F", "Lower limit: -15°F", "Trapezoidal baffles", "3 lbs 6 oz"],
+      "audiences": ["backcountry_hikers", "cold_weather"]
+    },
+    "slab_35qt": {
+      "name": "Slab 35QT",
+      "line": "coolers",
+      "price": 285,
+      "description": "35-quart hard cooler that keeps ice for days, not hours.",
+      "key_features": ["Rotomolded polyethylene", "3\" commercial-grade insulation", "5+ day ice retention", "Bear-resistant certified", "Marine-grade hardware", "22 lbs"],
+      "audiences": ["casual_car_camping"]
+    },
+    "foldout": {
+      "name": "Foldout Soft Cooler",
+      "line": "coolers",
+      "price": 145,
+      "description": "Collapsible soft cooler for day trips, grocery runs, and anywhere a hard cooler is overkill.",
+      "key_features": ["840D TPU-coated polyester", "Welded leak-proof liner", "24-hour ice retention", "Magnetic closure", "Folds flat to 3\"", "3 lbs 2 oz"],
+      "audiences": ["casual_car_camping"]
+    }
+  },
+  "audiences": {
+    "backcountry_hikers": {
+      "name": "Backcountry Hikers",
+      "product_lines": ["backpacks", "tents", "sleeping_bags"],
+      "voice_adaptation": "backcountry",
+      "profile": "Experienced hikers with 5+ years backcountry travel. Distrust marketing-heavy brands. Research extensively. Loyalty goes to products, not companies."
+    },
+    "thru_hikers": {
+      "name": "Thru-Hikers",
+      "product_lines": ["backpacks", "sleeping_bags"],
+      "voice_adaptation": "backcountry",
+      "profile": "Weight-conscious but not weight-obsessed. Need gear that performs over 2,000+ miles. Community-driven purchase decisions."
+    },
+    "casual_car_camping": {
+      "name": "Casual / Car Camping",
+      "product_lines": ["coolers", "tents"],
+      "voice_adaptation": "casual",
+      "profile": "Quality-aware but not gear-obsessed. Tired of replacing cheap gear. See premium brands as overpriced. Shorter research cycles, more influenced by recommendations."
+    },
+    "cold_weather": {
+      "name": "Cold-Weather Specialists",
+      "product_lines": ["sleeping_bags", "tents"],
+      "voice_adaptation": "backcountry",
+      "profile": "Conditions-driven buyers. Most spec-literate segment. Trust independent lab testing. Will pay premium if specs justify it."
+    }
   }
 }
