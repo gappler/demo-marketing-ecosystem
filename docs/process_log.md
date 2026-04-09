@@ -5,6 +5,31 @@ version: 1.0
 
 # Process Log
 
+## 2026-04-09 — Research & Brief Builder
+
+**Prompt:** Build the Research & Brief Builder for Yowie. This component is the upstream intelligence feed — it takes raw inputs and produces structured campaign briefs that feed directly into the Content Engine. Demonstrate it with competitive research, audience analysis, and reasoning chains. Make it interactive with a pipeline diagram showing human decision points.
+
+**What was built:** An interactive single-file HTML tool (`tools/brief_builder.html`) that demonstrates Yowie's research-to-brief pipeline. Contains 3 pre-generated research briefs: Slab 35QT cooler acquisition (vs. YETI, Stanley, RTIC, Igloo), Lowline 2P cold-weather launch (vs. MSR, Hilleberg, Big Agnes, REI), and Foldout soft cooler cross-sell to existing Slab buyers. Each brief includes competitive landscape analysis, audience research, reasoning chains explaining every brief decision, and a structured output brief compatible with the Content Engine.
+
+**Key decisions:**
+- Pipeline diagram at top with 5 stages — AI stages in teal, human review gate in gold
+- Clickable pipeline stages scroll to corresponding sections with highlight animation
+- 3 briefs chosen to demonstrate different campaign objectives: acquisition, launch, cross-sell
+- Competitive research covers 4 real competitors per brief with pricing, positioning, strengths, weaknesses
+- Reasoning section makes the research-to-brief logic chain explicit and visible
+- Output brief matches Content Engine schema exactly — same field structure
+- Human review section with checklist makes the decision gate concrete
+- "AI produces drafts. Humans make decisions." tagline reinforces the workflow
+
+**Files created or modified:**
+- `tools/brief_builder.html` (created)
+- `docs/superpowers/specs/2026-04-09-brief-builder-design.md` (created)
+- `docs/superpowers/plans/2026-04-09-brief-builder.md` (created)
+- `docs/process_log.md` (modified)
+- `tutorials/04_brief_builder.md` (created)
+
+---
+
 ## 2026-04-09 — Content Engine
 
 **Prompt:** Build the Content Engine for Yowie. It reads the Brand Configuration Layer and takes a structured campaign brief as input. The brief includes: product line, audience segment, channel, content type, campaign stage, primary message, and optional fields. The engine produces on-brand, segment-specific, channel-ready content. Demonstrate four output modes: single item, segment variants, channel variants, and a full campaign package. Output as an interactive HTML tool.
