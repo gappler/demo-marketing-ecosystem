@@ -93,7 +93,8 @@
           "What denier ratings mean",
           "Why fill power matters",
           "The difference between comfort rating and lower limit",
-          "What DAC poles are and why they matter"
+          "What DAC poles are and why they matter",
+          "Load rating and framesheet construction"
         ],
         "guidelines": [
           "Include precise technical specs without simplifying them.",
@@ -114,7 +115,8 @@
           "Translate technical specs into observable outcomes (e.g., 'keeps ice five days' not '3-inch pressure-injected insulation').",
           "Focus on what the product does rather than how it is built.",
           "Avoid jargon specific to gear enthusiasts.",
-          "Connect quality to value — frame durability as a savings argument."
+          "Connect quality to value — frame durability as a savings argument.",
+          "The 'no brand tax' message resonates strongly with this audience."
         ]
       }
     }
