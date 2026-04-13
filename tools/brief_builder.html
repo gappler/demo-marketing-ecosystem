@@ -141,6 +141,8 @@
       left: 0;
       bottom: 0;
       overflow-y: auto;
+      display: flex;
+      flex-direction: column;
     }
     .main {
       margin-left: 280px;
@@ -221,10 +223,9 @@
       color: #b388ff;
     }
     .sidebar-footer {
-      position: absolute;
-      bottom: 24px;
-      left: 24px;
-      right: 24px;
+      margin-top: auto;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
     }
     .sidebar-footer p {
       font-size: 0.7rem;
