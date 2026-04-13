@@ -55,6 +55,20 @@
     }
     a.pipeline-stage { text-decoration: none; }
     a.pipeline-stage:hover { transform: translateY(-1px); }
+    .pipeline-stage.context {
+      border-style: dashed;
+      opacity: 0.6;
+      cursor: default;
+    }
+    .pipeline-stage.context:hover { transform: none; }
+    .stage-overline {
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 3px;
+    }
     .pipeline-stage.current {
       background: rgba(100,255,218,0.15);
       border-color: rgba(100,255,218,0.5);
@@ -1266,8 +1280,10 @@ function renderPipeline() {
   var html = '';
   // Stages that belong to this tool (Brief Builder)
   var currentStages = { raw_inputs: true, ai_research: true, draft_brief: true };
-  // Stages that link to other tools
-  var linkedStages = { content_engine: 'content_engine.html' };
+  // Stages that exist in other demo panels on the homepage — shown as context, not clickable
+  var contextStages = {
+    content_engine: { overline: 'Downstream \u2192', subtitle: 'See next panel \u2193' }
+  };
 
   BUILDER_DATA.pipeline.stages.forEach(function(stage, i) {
     if (i > 0) {
@@ -1275,15 +1291,16 @@ function renderPipeline() {
     }
     var icon = stage.color === 'gold' ? '\u2691 ' : '';
     var isCurrent = currentStages[stage.id];
-    var link = linkedStages[stage.id];
-    var classes = 'pipeline-stage ' + stage.color + (isCurrent ? ' current' : '');
+    var context = contextStages[stage.id];
+    var classes = 'pipeline-stage ' + stage.color + (isCurrent ? ' current' : '') + (context ? ' context' : '');
     var subtitleText = (stage.id === 'raw_inputs') ? 'You are here' : stage.subtitle;
 
-    if (link) {
-      html += '<a class="' + classes + '" href="' + link + '">';
+    if (context) {
+      html += '<div class="' + classes + '" title="This stage lives in the next demo panel on the homepage.">';
+      html += '<div class="stage-overline">' + context.overline + '</div>';
       html += '<div class="stage-label">' + icon + stage.label + '</div>';
-      html += '<div class="stage-subtitle">' + stage.subtitle + '</div>';
-      html += '</a>';
+      html += '<div class="stage-subtitle">' + context.subtitle + '</div>';
+      html += '</div>';
     } else if (stage.scroll_to) {
       html += '<div class="' + classes + '" data-stage="' + stage.id + '" onclick="scrollToStage(\'' + stage.id + '\')">';
       html += '<div class="stage-label">' + icon + stage.label + '</div>';
@@ -1305,7 +1322,11 @@ function scrollToStage(stageId) {
   if (!stage || !stage.scroll_to) return;
   var target = document.getElementById(stage.scroll_to);
   if (!target) return;
-  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Use the iframe's own window so scrolling stays contained inside the demo panel
+  // instead of bubbling to the parent page (scrollIntoView bubbles, scrollTo does not).
+  var pipelineHeight = (document.querySelector('.pipeline') || {}).offsetHeight || 100;
+  var topPos = target.getBoundingClientRect().top + window.pageYOffset - pipelineHeight - 8;
+  window.scrollTo({ top: topPos, behavior: 'smooth' });
   target.classList.remove('section-highlight');
   void target.offsetWidth;
   target.classList.add('section-highlight');

@@ -46,6 +46,20 @@
     }
     a.pipeline-stage { text-decoration: none; cursor: pointer; }
     a.pipeline-stage:hover { transform: translateY(-1px); }
+    .pipeline-stage.context {
+      border-style: dashed;
+      opacity: 0.6;
+      cursor: default;
+    }
+    .pipeline-stage.context:hover { transform: none; }
+    .stage-overline {
+      font-size: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 2px;
+    }
     .pipeline-stage.teal {
       background: rgba(100,255,218,0.06); border-color: rgba(100,255,218,0.2);
     }
@@ -279,14 +293,16 @@
   <!-- Pipeline Diagram -->
   <div class="pipeline">
     <div class="pipeline-stages">
-      <a class="pipeline-stage teal" href="brief_builder.html">
+      <div class="pipeline-stage teal context" title="This stage lives in the previous demo panel on the homepage.">
+        <div class="stage-overline">&larr; Upstream</div>
         <div class="stage-label">Brief Builder</div>
-        <div class="stage-subtitle">Research & draft</div>
-      </a>
+        <div class="stage-subtitle">See previous panel &uarr;</div>
+      </div>
       <div class="pipeline-arrow">→</div>
-      <div class="pipeline-stage teal">
+      <div class="pipeline-stage teal context" title="Human gate that happens before this tool runs.">
+        <div class="stage-overline">&larr; Upstream gate</div>
         <div class="stage-label">⚑ Brief Approval</div>
-        <div class="stage-subtitle">Human review</div>
+        <div class="stage-subtitle">Human review before</div>
       </div>
       <div class="pipeline-arrow">→</div>
       <div class="pipeline-stage teal active-stage">
@@ -294,14 +310,16 @@
         <div class="stage-subtitle">You are here</div>
       </div>
       <div class="pipeline-arrow">→</div>
-      <div class="pipeline-stage gold">
+      <div class="pipeline-stage gold context" title="Human gate that happens after this tool runs.">
+        <div class="stage-overline">Downstream gate &rarr;</div>
         <div class="stage-label">⚑ Content Review</div>
-        <div class="stage-subtitle">Approve / revise</div>
+        <div class="stage-subtitle">Human review after</div>
       </div>
       <div class="pipeline-arrow">→</div>
-      <div class="pipeline-stage teal">
+      <div class="pipeline-stage teal context" title="Downstream distribution step, not part of this tool.">
+        <div class="stage-overline">Downstream &rarr;</div>
         <div class="stage-label">Publish</div>
-        <div class="stage-subtitle">Distribute content</div>
+        <div class="stage-subtitle">After this tool</div>
       </div>
     </div>
     <div class="pipeline-tagline">You are here: Content Engine. AI produces drafts. Humans make decisions.</div>

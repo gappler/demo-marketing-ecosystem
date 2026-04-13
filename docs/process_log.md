@@ -3,6 +3,25 @@ title: Process Log
 version: 1.0
 ---
 
+## 2026-04-13 — Mark cross-tool pipeline tiles as non-interactive context
+
+**Prompt:** Review the main menu tiles in the Research & Brief Builder and Content Engine to make sure they're contained within their demo panels; then fix the confusing UX where clicking "Content Engine" from Brief Builder (inside the homepage iframe) swaps the panel's content. Label non-clickable tiles so users understand what they represent. Also fix the Brief Builder "Raw Inputs" click scrolling the whole homepage.
+
+**Built:**
+- `tools/brief_builder.html`: Added `.pipeline-stage.context` (dashed, dimmed, `cursor: default`) and `.stage-overline` styles. Rewrote the pipeline renderer so the `content_engine` tile is a non-clickable context tile with `Downstream →` overline and "See next panel ↓" subtitle instead of an anchor to `content_engine.html`. Replaced `scrollIntoView` in `scrollToStage` with `window.scrollTo` against the iframe's own window (offset by the sticky pipeline height) so intra-tool clicks no longer bubble scroll to the parent homepage.
+- `tools/content_engine.html`: Added the same context-tile CSS. Converted the Brief Builder tile from an `<a>` link to a context div with `← Upstream` overline. Marked Brief Approval, Content Review, and Publish as context tiles with `← Upstream gate`, `Downstream gate →`, and `Downstream →` overlines respectively — they were always non-interactive (no `#section-*` targets exist for them in this tool) so the styling now makes that honest.
+
+**Key decisions:**
+- Chose the "label + dashed/dimmed" approach over making cross-tool tiles navigate the parent page (`target="_top"` with anchors) because the homepage already provides sticky tool-nav for cross-tool jumps; inside each demo, these tiles' real job is pipeline context, not navigation.
+- Used `window.scrollTo` instead of `scrollIntoView` because the latter bubbles scroll to ancestor scrollable elements — inside an iframe that means the parent page also scrolls, which was the "whole page jumps up" bug.
+- Measured sticky pipeline height dynamically (`document.querySelector('.pipeline').offsetHeight`) rather than hardcoding, so future tagline/padding changes don't break the offset.
+- Left Content Engine's pipeline as a static HTML block (not JS-rendered like Brief Builder's) to match the existing pattern in that file.
+
+**Files modified:**
+- `tools/brief_builder.html`
+- `tools/content_engine.html`
+- `docs/process_log.md`
+
 ## 2026-04-11 — Switch body font to Inter
 
 **Prompt:** Change the body font-family from '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif' to 'Inter, sans-serif'. Per CLAUDE.md, Inter is the primary font for all demos.
