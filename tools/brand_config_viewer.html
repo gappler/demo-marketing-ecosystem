@@ -117,6 +117,22 @@
       border-color: var(--accent-gold);
     }
 
+    button[data-group].dimmed {
+      opacity: 0.35;
+      cursor: default;
+      border-bottom-style: dashed;
+    }
+
+    button[data-group].dimmed:hover {
+      opacity: 0.5;
+      background: rgba(255,255,255,0.06);
+      color: var(--text-secondary);
+    }
+
+    button[data-group].dimmed.active {
+      opacity: 0.6;
+    }
+
     #rules-panel {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -795,13 +811,60 @@
       channel: 'product_page'
     };
 
+    function productHasAudience(product, audience) {
+      for (var ch in CONFIG.voice.channels) {
+        if (CONFIG.examples[product + '|' + audience + '|' + ch]) return true;
+      }
+      return false;
+    }
+
+    function productHasChannel(product, channel) {
+      for (var aud in CONFIG.audiences) {
+        if (CONFIG.examples[product + '|' + aud + '|' + channel]) return true;
+      }
+      return false;
+    }
+
+    function firstValidAudience(product) {
+      for (var aud in CONFIG.audiences) {
+        if (productHasAudience(product, aud)) return aud;
+      }
+      return state.audience;
+    }
+
+    function firstValidChannel(product) {
+      for (var ch in CONFIG.voice.channels) {
+        if (productHasChannel(product, ch)) return ch;
+      }
+      return state.channel;
+    }
+
     function selectOption(group, value) {
       state[group] = value;
-      document.querySelectorAll('[data-group="' + group + '"]').forEach(function(btn) {
-        btn.classList.toggle('active', btn.dataset.value === value);
+      if (group === 'product') {
+        if (!productHasAudience(state.product, state.audience)) {
+          state.audience = firstValidAudience(state.product);
+        }
+        if (!productHasChannel(state.product, state.channel)) {
+          state.channel = firstValidChannel(state.product);
+        }
+      }
+      ['product', 'audience', 'channel'].forEach(function(g) {
+        document.querySelectorAll('[data-group="' + g + '"]').forEach(function(btn) {
+          btn.classList.toggle('active', btn.dataset.value === state[g]);
+        });
       });
       updateDisplay();
       updateHash();
+    }
+
+    function updateButtonDimState() {
+      document.querySelectorAll('button[data-group="audience"]').forEach(function(btn) {
+        btn.classList.toggle('dimmed', !productHasAudience(state.product, btn.dataset.value));
+      });
+      document.querySelectorAll('button[data-group="channel"]').forEach(function(btn) {
+        btn.classList.toggle('dimmed', !productHasChannel(state.product, btn.dataset.value));
+      });
     }
 
     function updateHash() {
@@ -829,6 +892,7 @@
     }
 
     function updateDisplay() {
+      updateButtonDimState();
       updateVoiceCard();
       updateMessagingCard();
       updateTerminologyCard();
@@ -994,21 +1058,33 @@
       } else {
         var channel = CONFIG.voice.channels[state.channel];
         var adaptationMode = CONFIG.audiences[state.audience].voice_adaptation;
+        var audienceDimmed = !productHasAudience(state.product, state.audience);
+        var channelDimmed = !productHasChannel(state.product, state.channel);
         html = '<div class="no-example">';
-        html += 'No example for this combination: <strong>' +
-          escapeHtml(CONFIG.products[state.product].name) + '</strong> + <strong>' +
-          escapeHtml(CONFIG.audiences[state.audience].name) + '</strong> + <strong>' +
-          escapeHtml(state.channel.replace(/_/g, ' ')) + '</strong>';
-        html += '<div class="rule-summary">';
-        html += '<p>Applicable rules for this combination:</p>';
-        html += '<ul style="margin-top:6px;">';
-        html += '<li>Register: ' + escapeHtml(channel.register) + '</li>';
-        html += '<li>Adaptation: ' + escapeHtml(adaptationMode) + '</li>';
-        channel.rules.forEach(function(r) {
-          html += '<li>' + escapeHtml(r) + '</li>';
-        });
-        html += '</ul>';
-        html += '</div>';
+        if (audienceDimmed || channelDimmed) {
+          var axisLabel = audienceDimmed && channelDimmed ? 'audience or channel'
+            : audienceDimmed ? 'audience' : 'channel';
+          html += '<p><strong>' + escapeHtml(CONFIG.products[state.product].name) +
+            '</strong> isn\u2019t marketed to this ' + axisLabel + ' combination: <strong>' +
+            escapeHtml(CONFIG.audiences[state.audience].name) + '</strong> + <strong>' +
+            escapeHtml(state.channel.replace(/_/g, ' ')) + '</strong>.</p>';
+          html += '<p style="margin-top:8px;">The voice rules, pillar rankings, and terminology above still apply \u2014 but no copy example exists because this pairing wouldn\u2019t occur in practice.</p>';
+        } else {
+          html += 'No example for this combination: <strong>' +
+            escapeHtml(CONFIG.products[state.product].name) + '</strong> + <strong>' +
+            escapeHtml(CONFIG.audiences[state.audience].name) + '</strong> + <strong>' +
+            escapeHtml(state.channel.replace(/_/g, ' ')) + '</strong>';
+          html += '<div class="rule-summary">';
+          html += '<p>Applicable rules for this combination:</p>';
+          html += '<ul style="margin-top:6px;">';
+          html += '<li>Register: ' + escapeHtml(channel.register) + '</li>';
+          html += '<li>Adaptation: ' + escapeHtml(adaptationMode) + '</li>';
+          channel.rules.forEach(function(r) {
+            html += '<li>' + escapeHtml(r) + '</li>';
+          });
+          html += '</ul>';
+          html += '</div>';
+        }
         html += '</div>';
         container.innerHTML = html;
       }

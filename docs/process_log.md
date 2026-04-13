@@ -3,6 +3,56 @@ title: Process Log
 version: 1.0
 ---
 
+## 2026-04-13 — Restructure demo as pipeline continuum (reconcile briefs, rebuild index)
+
+**Prompt:** Restructure the Yowie Marketing Ecosystem demo to present Brand Config → Brief Builder → Content Engine as a connected pipeline instead of a gallery of separate tools. Three coordinated changes: (1) reconcile brief data across tools so the same three briefs flow through both (slab_acquisition, lowline_launch, burrow_seasonal), (2) restructure index.html as a continuum with Brand Config demoted to a foundation layer, Brief Builder as Stage 1, Content Engine as Stage 2, and human decision gates between them, (3) minor updates to in-tool pipeline diagrams (no functional change required). Four decision points resolved before execution: include `default_mode` in Brief Builder output_brief; trust Content Engine for slab_acquisition field mismatches; flip lowline_launch.default_mode to `segments`; replace hr dividers with thin vertical line + down-arrow flow connectors.
+
+**Built:**
+
+- `tools/content_engine.html`: Deleted `basecamp_4p_cross` from `CONTENT_DATA.briefs` and its ~175-line generated content block in `CONTENT_DATA.generated`. Flipped `lowline_launch.default_mode` from `single` to `segments` so the brief opens on the segment-variant tab (the view that actually shows off its two-audience split).
+- `tools/brief_builder.html`: Reconciled `slab_acquisition.output_brief` to match Content Engine verbatim — collapsed `secondary_messages` to the single "drag it across gravel" line, simplified `proof_points` to drop "polyethylene" and "(IGBC)" qualifiers, added `default_mode: "channels"`. Repurposed `lowline_cold_weather` in place into `lowline_launch`: new id/name/description, rewrote `target_audience`, `campaign_objective`, `audience_analysis.profile`, positioning_angle, `message_rationale`, `channel_rationale`, and `pillar_rationale` to cover both backcountry and cold-weather segments, added backcountry to `audience_segments`, added `default_mode: "segments"`. Fully replaced `foldout_cross_sell` with a new `burrow_seasonal` brief — authored raw inputs (Burrow 0°F specs matching the CE proof points), a four-competitor landscape (Western Mountaineering Kodiak, Feathered Friends Snowbunting, Marmot Col, REI Magma), two-segment audience analysis, seasonal-window context, positioning angle, reasoning chains for message/channel/proof-point/pillar, and an output_brief that matches CE's burrow_seasonal verbatim plus `default_mode: "package"`. Extended `renderBriefOutput` to display `default_mode` as a visible field when present.
+- `index.html`: Replaced the four-section gallery with a six-anchor pipeline. Navigation now reads: Overview → Foundation → Stage 1: Brief Builder → Gate: Brief Review → Stage 2: Content Engine → Gate: Content Review. Added new CSS blocks for `.tool-number.overview` (elongated pill badge), `.foundation-section`/`.foundation-inner` (full-width dashed container echoing the architecture map's data-layer node), `.flow-connector` (thin 28px vertical line + down-arrow glyph), and `.gate-section`/`.gate-inner` (amber `#d4a94e` border on `#fdf8ea` background with checklist and italic gate-note). Removed all `.divider`/`<hr>` rules and elements — the gates and flow connectors carry the visual rhythm. Rewrote the intro copy to lead with "This is a pipeline, not a gallery." Architecture Map now shows an "Overview" badge instead of the number `1`. Brand Config moved out of the numbered sequence into the foundation block with its iframe preserved. Brief Builder and Content Engine are now `Stage 1` and `Stage 2` with the original numbered-circle treatment. Two human gate interstitials use the exact checklists from the architecture map's `Brief Review & Approval` and `Content Review & Approval` nodes.
+- `docs/process_log.md`: This entry.
+
+**Key decisions:**
+
+- **Trust Content Engine for slab_acquisition field mismatches.** The generated content is what visitors actually see; the Brief Builder's reasoning prose is supporting text. Before overwriting the output_brief, grepped the reasoning chain for "IGBC" and "polyethylene" to check whether dropping those qualifiers would orphan any cited lines — neither appeared (reasoning already used the paraphrased CE wording), so no prose rewrite was needed.
+- **Repurpose rather than delete-and-add.** `lowline_cold_weather` already had nearly identical output_brief fields to CE's `lowline_launch` — the only meaningful differences were `audience_segments` (one segment vs. two) and the missing `default_mode`. Rewriting the audience-specific sections in place preserved the rich competitive-landscape and raw-inputs data instead of throwing it away and authoring from scratch. Same approach would have applied to `foldout_cross_sell` → `burrow_seasonal` but the product line (soft cooler → sleeping bag) and audience (existing customers → winter buyers) had no overlap, so this one got a complete rewrite.
+- **Flip lowline_launch.default_mode to `segments`.** The existing CE data had `single`, which defaults the most interesting thing about that brief — its two-audience adaptation — to an output mode that hides it. One-line metadata change with no effect on the generated content blocks.
+- **Include `default_mode` in Brief Builder's output_brief schema and render it.** The user's concern was that "if someone inspects the data, the schemas should match." Adding it to the data satisfies that, and adding it to `renderBriefOutput` as a displayed field reinforces the "brief flows through unchanged" narrative in the UI rather than just in source.
+- **Replace hr dividers with thin vertical line + down-arrow, not remove them entirely.** The gates ARE the connectors, but without any vertical rhythm between sections the eye didn't track the flow from one stage into the next. A 28px line + `↓` glyph is the lightest touch that still reads as flow; anything more prominent would compete with the amber gate interstitials.
+- **Adapt architecture map's dark-theme amber to the light-theme index.** Copied the spirit (amber border, warm background, check-box checklist) not the literal colors — the index is on `#f5f5f5`, so used `#d4a94e` border on `#fdf8ea` background with `#a87e1e` header text and `#3e3420` checklist text for sufficient contrast.
+- **Do not touch in-tool pipeline diagrams.** The task explicitly said "no functional change needed" for the Brief Builder and Content Engine diagrams. They already render upstream/downstream stages as non-interactive context tiles, which is correct behavior whether the tools are viewed inside index.html's iframes or opened full-size.
+- **Task ordering: Content Engine first.** Content Engine had the simplest change (deletions + one-line flip) and set the "source of truth" for the brief fields that Brief Builder then reconciled against, so doing CE first meant no mid-edit rework.
+
+**Files modified:**
+- `tools/content_engine.html`
+- `tools/brief_builder.html`
+- `index.html`
+- `docs/process_log.md`
+
+---
+
+## 2026-04-13 — Dim invalid audience/channel buttons in Brand Config Viewer
+
+**Prompt:** In brand_config_viewer.html, update the selector buttons so that audience and channel options without a copy example for the current product are visually dimmed and don't leave the user on an empty state. Dim any audience/channel button with zero examples under the current product. Dimmed buttons stay clickable (voice rules, pillars, terminology still update). When a dimmed combo is active, replace the "No example" message with: "This product isn't marketed to this audience/channel combination. The voice rules and terminology above still apply — but no copy example exists because this pairing wouldn't occur in practice." When switching products, auto-switch audience/channel if the current one becomes invalid. CSS: opacity 0.35, cursor default, dashed border-bottom. Don't use pointer-events: none. Don't change the examples data.
+
+**Built:**
+- `tools/brand_config_viewer.html`: Added `button[data-group].dimmed` CSS (opacity 0.35, `cursor: default`, `border-bottom-style: dashed`) plus a toned hover and a lightened `.dimmed.active` state so the active ring stays visible if the user deliberately lands on a dimmed combo. Added `productHasAudience`, `productHasChannel`, `firstValidAudience`, `firstValidChannel` helpers that scan `CONFIG.examples` by `product|audience|channel` key. Added `updateButtonDimState` and called it from `updateDisplay` so dimming recomputes on every state change. Extended `selectOption` so product changes auto-switch audience/channel to the first valid option when the current one has no examples under the new product, and re-toggle `.active` classes across all three groups. Rewrote the no-example branch of `updateCopyPreview` to show the "not marketed to this combination" message when either axis is dimmed, falling back to the old rules-summary message otherwise.
+
+**Key decisions:**
+- Kept `pointer-events` enabled per spec so dimmed buttons remain selectable — the data-driven panels (voice rules, pillars, terminology) already work for any combo, so there's value in letting users explore.
+- Auto-switch only fires on product changes, not on direct audience/channel clicks. A user who clicks a dimmed audience button has expressed intent; overriding that would fight them.
+- Left `loadFromHash` alone — a hash URL is user-specified intent, not a default, so it's allowed to land on a dimmed combo.
+- Reused existing `.no-example` container styling so the new message inherits the same layout; only the inner HTML differs between the "dimmed combo" and "plain missing" branches.
+- Labelled which axis caused the dimming ("audience", "channel", or "audience or channel") so the message is specific even when both axes are invalid simultaneously.
+
+**Files modified:**
+- `tools/brand_config_viewer.html`
+- `docs/process_log.md`
+
+---
+
 ## 2026-04-13 — Mark cross-tool pipeline tiles as non-interactive context
 
 **Prompt:** Review the main menu tiles in the Research & Brief Builder and Content Engine to make sure they're contained within their demo panels; then fix the confusing UX where clicking "Content Engine" from Brief Builder (inside the homepage iframe) swaps the panel's content. Label non-clickable tiles so users understand what they represent. Also fix the Brief Builder "Raw Inputs" click scrolling the whole homepage.
