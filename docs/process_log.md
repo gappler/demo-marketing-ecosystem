@@ -3,6 +3,30 @@ title: Process Log
 version: 1.0
 ---
 
+## 2026-04-15 — Rename "Yowie Marketing Ecosystem" to "Yowie Content Pipeline"
+
+**Prompt:** Rename "Yowie Marketing Ecosystem" to "Yowie Content Pipeline" across two repos (demo-marketing-ecosystem and agency-state). Don't change the GitHub repo name — just the user-facing text. Update index.html hero title, page `<title>`, OG/Twitter meta tags, any intro references, and architecture_map.html header/footer. In agency-state/index.html: change demo tile name from "Yowie Expanded" to "Yowie Content Pipeline" and descriptor from "Marketing Ecosystem — full pipeline" to "Content Pipeline — full production workflow". Do not touch other tool HTML files, the repo name, CTA, or footer.
+
+**Built:**
+
+- `index.html`: Page `<title>`, `og:title`, `twitter:title`, and hero title updated to "Demo: Yowie Content Pipeline". Intro copy already used "pipeline" language, so no change needed.
+- `tools/architecture_map.html`: Page `<title>`, H1 header, brand-config node description ("across the ecosystem" → "across the pipeline"), and footer built-with line all updated.
+- `../agency-state/index.html`: Demo tile `.demo-name` "Yowie Expanded" → "Yowie Content Pipeline"; `.demo-company` "Marketing Ecosystem — full pipeline" → "Content Pipeline — full production workflow". Tool count line and other tile content left as-is.
+
+**Key decisions:**
+
+- **Left the GitHub repo name alone.** User explicitly said text-only; renaming the repo would break the live GitHub Pages URL (`gappler.github.io/demo-marketing-ecosystem/`) referenced from the agency-state tile and from the demo's own intro link.
+- **Did not touch brief_builder.html, content_engine.html, or brand_config_viewer.html.** None of those files contained the "Marketing Ecosystem" phrase in their headers — only architecture_map.html did — and the user's instructions explicitly excluded them.
+
+**Files modified:**
+
+- `index.html`
+- `tools/architecture_map.html`
+- `../agency-state/index.html` (separate repo)
+- `docs/process_log.md`
+
+---
+
 ## 2026-04-13 — Restructure demo as pipeline continuum (reconcile briefs, rebuild index)
 
 **Prompt:** Restructure the Yowie Marketing Ecosystem demo to present Brand Config → Brief Builder → Content Engine as a connected pipeline instead of a gallery of separate tools. Three coordinated changes: (1) reconcile brief data across tools so the same three briefs flow through both (slab_acquisition, lowline_launch, burrow_seasonal), (2) restructure index.html as a continuum with Brand Config demoted to a foundation layer, Brief Builder as Stage 1, Content Engine as Stage 2, and human decision gates between them, (3) minor updates to in-tool pipeline diagrams (no functional change required). Four decision points resolved before execution: include `default_mode` in Brief Builder output_brief; trust Content Engine for slab_acquisition field mismatches; flip lowline_launch.default_mode to `segments`; replace hr dividers with thin vertical line + down-arrow flow connectors.
